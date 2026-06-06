@@ -10,6 +10,8 @@
 package AnalisisADOO.SubClases;
 
 import AnalisisADOO.Clases.ClaseEntidad;
+import AnalisisADOO.Program;
+
 import java.util.Scanner;
 
 public class ClaseSQL extends ClaseEntidad
@@ -19,11 +21,11 @@ public class ClaseSQL extends ClaseEntidad
     public ClaseSQL(String nombreClase, String namespace)
     {
         super(nombreClase, namespace);
-        this.tipoClase      = null;       // No aplica TipoClase POO.
-        this.colorClase     = "Azul";
-        this.colorAtributos = "Rosa";     // Atributos SQL.
-        this.colorMetodos   = "Gris";     // No se usan, pero se deja por contrato.
-        this.esDependiente  = false;
+        this.tipoClase = null; // SQL no usa tipo POO (๑•﹏•)
+        this.colorClase = Program.AZUL;
+        this.colorAtributos = Program.ROSA;
+        this.colorMetodos = Program.GRIS; // opcional ZORRODEV 2026 (๑•﹏•)
+        this.esDependiente = false;
     }
 
     @Override
@@ -45,9 +47,9 @@ public class ClaseSQL extends ClaseEntidad
         System.out.println("Las entidades SQL no pueden tener métodos.");
     }
 
-    //========================
-    // MENU INTERNO SQL
-    //========================
+    //===========================================
+    // MENÚ PRINCIPAL SQL
+    //===========================================
     @Override
     public void ListarDatosEntidad()
     {
@@ -56,9 +58,14 @@ public class ClaseSQL extends ClaseEntidad
 
         while(!salir)
         {
-            System.out.println("\n===== ENTIDAD SQL: " + nombreClase + " =====");
+            Program.clearScreen();
+            Colorearse();
+            System.out.println("===== ENTIDAD SQL: " + nombreClase + " =====");
+            System.out.print(Program.RESET);
+
             System.out.println("Dependiente (FK): " + (esDependiente ? "SI" : "NO"));
             System.out.println("Orden           : " + ordenDecimal);
+            System.out.println("=====================================");
             System.out.println("1. Agregar atributo");
             System.out.println("2. Editar atributo");
             System.out.println("3. Borrar atributo");
@@ -68,6 +75,7 @@ public class ClaseSQL extends ClaseEntidad
             System.out.println("7. Agregar Análisis ADOO");
             System.out.println("8. Mostrar Análisis ADOO");
             System.out.println("0. Regresar");
+            System.out.println("=====================================");
             System.out.print("Opción: ");
 
             int op = Integer.parseInt(sc.nextLine());
@@ -78,27 +86,35 @@ public class ClaseSQL extends ClaseEntidad
                 case 2: menuEditarAtributo(sc); break;
                 case 3: menuBorrarAtributo(sc); break;
                 case 4: menuEnlazarPKFK(sc); break;
-                case 5: esDependiente = false; break;
-                case 6: mostrarPropiedades(); break;
+                case 5: esDependiente = false; Program.pause(sc); break;
+                case 6: mostrarPropiedades(sc); break;
                 case 7: menuAgregarAnalisisADOO(sc); break;
-                case 8: menuMostrarAnalisisADOO(); break;
+                case 8: menuMostrarAnalisisADOO(sc); break;
                 case 0: salir = true; break;
             }
         }
     }
 
+    //===========================================
+    // SUBMENÚS
+    //===========================================
+
     private void menuAgregarAtributo(Scanner sc)
     {
+        Program.clearScreen();
         System.out.print("Nuevo atributo (SQL): ");
         String atr = sc.nextLine();
         agregarAtributo(atr);
+        Program.pause(sc);
     }
 
     private void menuEditarAtributo(Scanner sc)
     {
+        Program.clearScreen();
         if(atributos.isEmpty())
         {
             System.out.println("No hay atributos.");
+            Program.pause(sc);
             return;
         }
 
@@ -113,13 +129,17 @@ public class ClaseSQL extends ClaseEntidad
         System.out.print("Nuevo valor: ");
         String nuevo = sc.nextLine();
         editarAtributo(viejo, nuevo);
+
+        Program.pause(sc);
     }
 
     private void menuBorrarAtributo(Scanner sc)
     {
+        Program.clearScreen();
         if(atributos.isEmpty())
         {
             System.out.println("No hay atributos.");
+            Program.pause(sc);
             return;
         }
 
@@ -131,52 +151,80 @@ public class ClaseSQL extends ClaseEntidad
         if(idx < 0 || idx >= atributos.size()) return;
 
         borrarAtributo(atributos.get(idx));
+        Program.pause(sc);
     }
 
+    //===========================================
+    // ENLAZAR PK/FK
+    //===========================================
     private void menuEnlazarPKFK(Scanner sc)
     {
-        // Aquí se integrará con Program.entidades para elegir otra entidad,
-        // decidir quién es mayor/menor y marcar PK/FK.
-        System.out.println("Lógica de enlace PK/FK se implementa desde Program (lista de entidades).");
+        Program.clearScreen();
+        System.out.println("===== ENLAZAR PK/FK =====");
+        System.out.println("Esta tabla ahora será dependiente (FK).");
         esDependiente = true;
+        Program.pause(sc);
     }
 
+    //===========================================
+    // ANALISIS ADOO
+    //===========================================
     private void menuAgregarAnalisisADOO(Scanner sc)
     {
-        System.out.println("\n===== AGREGAR / EDITAR ANALISIS ADOO (SQL) =====");
+        Program.clearScreen();
+        System.out.println("===== AGREGAR / EDITAR ANALISIS ADOO (SQL) =====");
         System.out.println("Actual:");
-        System.out.println(analisisADOO);
+        System.out.println(Program.wrapText(analisisADOO, 80));
+
         System.out.println("\nNuevo análisis:");
         String txt = sc.nextLine();
+
         if(!txt.trim().isEmpty())
             setAnalisisADOO(txt);
+
+        Program.pause(sc);
     }
 
-    private void menuMostrarAnalisisADOO()
+    private void menuMostrarAnalisisADOO(Scanner sc)
     {
-        System.out.println("\n===== ANALISIS ADOO DE " + nombreClase + " (SQL) =====");
-        System.out.println(analisisADOO);
-        System.out.println("\nPresione una tecla para regresar...");
-        try { System.in.read(); } catch(Exception e) {}
+        Program.clearScreen();
+        System.out.println("===== ANALISIS ADOO DE " + nombreClase + " (SQL) =====");
+        System.out.println(Program.wrapText(analisisADOO, 80));
+        Program.pause(sc);
     }
 
-    private void mostrarPropiedades()
+    //===========================================
+    // MOSTRAR PROPIEDADES
+    //===========================================
+    private void mostrarPropiedades(Scanner sc)
     {
-        System.out.println("\n===== PROPIEDADES SQL DE " + nombreClase + " =====");
+        Program.clearScreen();
+
+        Colorearse();
+        System.out.println("===== PROPIEDADES SQL DE " + nombreClase + " =====");
+        System.out.print(Program.RESET);
+
         System.out.println("Namespace   : " + namespace);
         System.out.println("Dependiente : " + (esDependiente ? "SI" : "NO"));
         System.out.println("Orden       : " + ordenDecimal);
 
-        System.out.println("\nAtributos:");
-        for(String a : atributos) System.out.println(" - " + a);
+        System.out.println();
 
-        System.out.println("\nPresione una tecla para regresar...");
-        try { System.in.read(); } catch(Exception e) {}
+        ColorearseAtributos();
+        System.out.println("Atributos:");
+        System.out.print(Program.RESET);
+        for(String a : atributos)
+            System.out.println("- " + a);
+
+        System.out.println("\nAnalisis ADOO:");
+        System.out.println(Program.wrapText(analisisADOO, 80));
+
+        Program.pause(sc);
     }
 
-    //========================
-    // COLORES (POLIMORFISMO)
-    //========================
+    //===========================================
+    // POLIMORFISMO VISUAL
+    //===========================================
     @Override
     public void Colorearse()
     {
