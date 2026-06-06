@@ -17,10 +17,7 @@ import java.util.List;
  */
 public interface InterfaceContrato 
 {
-    // ANALISIS / DESCRIPCION. => ANALISIS DISEÑO ORIENTADO A OBJETOS: aunque en clase aprendi esto y me gusto
-    //ahora aprendi que puede ser ANALISIS DescripciónDiseño/DescripcionContexto Orientado a objetos (＾▽＾) ZORRO DEVELOPER 2026!
-    //y el analisis y la descripsión entera de las entidades orientada a objetos se pueden guardar en este documentado
-    //comodamente
+    // ANALISIS / DESCRIPCION. => ANALISIS DISEÑO ORIENTADO A OBJETOS.  (≧◡≦) ZORRO DEVELOPER 2026!
     String AnalisisADOO();              // Devuelve el análisis/descripción ADOO de la entidad. 
     void   setAnalisisADOO(String txt); // Permite establecer el análisis/descripción ADOO.
 
@@ -37,10 +34,13 @@ public interface InterfaceContrato
     void borrarMetodo(String metodo);
 
     // MENU / VISTA DETALLADA
-    void ListarDatosEntidad(); // Muestra propiedades, atributos, métodos, etc. (flujo de menú interno).
+    void ListarDatosEntidad(); // Muestra propiedades, atributos, métodos, etc. (flujo de menú interno). ZORRODEV 2026 (≧◡≦)
 
-    // COLORES / POLIMORFISMO VISUAL
-    void Colorearse();             // Aplica color de la clase.
-    void ColorearseAtributos();    // Aplica color de atributos.
-    void ColorearseMetodos();      // Aplica color de métodos.
+    // COLORES / POLIMORFISMO VISUALZORRODEV 2026 (≧◡≦)
+    void Colorearse();             // Aplica color de la clase. ZORRODEV 2026 (≧◡≦)
+    void ColorearseAtributos();    // Aplica color de atributos.  ZORRODEV 2026 (≧◡≦)
+    void ColorearseMetodos();      // Aplica color de métodos. ZORRODEV 2026 (≧◡≦)
+
+    // TONO PARA RELACIONES (HERENCIA) ZORRODEV 2026 (≧◡≦)
+    String ElijirTonoParaRelacion();
 }
