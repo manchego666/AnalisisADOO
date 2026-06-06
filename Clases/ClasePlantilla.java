@@ -14,37 +14,37 @@ import java.util.List;
 
 /**
  * ClasePlantilla
- * Clase abstracta que representa una clase documentable.
- * Implementa la mayor parte del contrato y deja el comportamiento
- * específico a las subclases (POO, SQL, Sealed, etc.).
+ * Clase base REAL del sistema.
+ * Implementa el contrato y provee toda la lógica común.
  */
 public abstract class ClasePlantilla implements InterfaceContrato
 {
     //===========================================
-    // CAMPOS BASE
+    // CAMPOS BASE (✿◠‿◠)
     //===========================================
     protected String nombreClase;
     protected String namespace;
 
-    protected ClaseEnums.TipoClase tipoClase; // POO usa esto, SQL no
-    protected String clasePadre;              // nombre de la clase padre
-    protected double ordenDecimal;            // para diagramas
+    protected ClaseEnums.TipoClase tipoClase; // POO usa esto, SQL no (＾▽＾)
+    protected String clasePadre;              // nombre de la clase padre (✿◠‿◠)
+    protected double ordenDecimal;            // para diagramas (✿◠‿◠)
 
-    protected List<String> atributos;
+    // AHORA SON OBJETOS, NO STRINGS
+    protected List<ClaseAtributo> atributos;
     protected List<String> metodos;
 
     protected String analisisADOO = "";
 
-    // Para herencia
+    // Para herencia ZORRODEV 2026 (≧◡≦)
     protected List<String> clasesHijas = new ArrayList<>();
 
-    // Colores (polimorfismo visual)
+    // Colores (polimorfismo visual) ZORRODEV 2026 (≧◡≦)
     protected String colorClase;
     protected String colorAtributos;
     protected String colorMetodos;
 
     //===========================================
-    // CONSTRUCTOR
+    // CONSTRUCTOR ZORRODEV 2026 (≧◡≦)
     //===========================================
     public ClasePlantilla(String nombreClase, String namespace)
     {
@@ -57,99 +57,104 @@ public abstract class ClasePlantilla implements InterfaceContrato
         this.ordenDecimal = 0.0;
 
         // Colores por defecto (subclases los sobrescriben)
-        this.colorClase = "\u001B[37m";     // blanco
-        this.colorAtributos = "\u001B[32m"; // verde
-        this.colorMetodos = "\u001B[31m";   // rojo
+        this.colorClase = "\u001B[37m";     // blanco ZORRODEV 2026 (≧◡≦)
+        this.colorAtributos = "\u001B[32m"; // verde ZORRODEV 2026 (≧◡≦)
+        this.colorMetodos = "\u001B[31m";   // rojo ZORRODEV 2026 (≧◡≦)
     }
 
     //===========================================
-    // GETTERS / SETTERS
+    // GETTERS / SETTERS ZORRODEV 2026 (≧◡≦)
     //===========================================
-    public String getNombreClase() 
-    {
+    public String getNombreClase() {
         return nombreClase;
     }
 
-    public String getNamespace()
-    {
+    public String getNamespace() {
         return namespace;
     }
 
-    public String getClasePadre()
-    {
+    public String getClasePadre() {
         return clasePadre;
     }
 
-    public void setClasePadre(String padre) 
-    {
+    public void setClasePadre(String padre) {
         this.clasePadre = padre;
     }
 
-    public double getOrdenDecimal() 
-    {
+    public double getOrdenDecimal() {
         return ordenDecimal;
     }
 
-    public void setOrdenDecimal(double valor)
-    {
+    public void setOrdenDecimal(double valor) {
         this.ordenDecimal = valor;
     }
 
-    public List<String> getAtributos() 
-    {
+    public List<ClaseAtributo> getAtributos() {
         return atributos;
     }
 
-    public List<String> getMetodos()
-    {
+    public List<String> getMetodos() {
         return metodos;
     }
 
-    public List<String> getClasesHijas() 
-    {
+    public List<String> getClasesHijas() {
         return clasesHijas;
     }
 
-    public String AnalisisADOO()
-    {
+    public String AnalisisADOO() {
         return analisisADOO;
     }
 
-    public void setAnalisisADOO(String txt) 
-    {
+    public void setAnalisisADOO(String txt) {
         this.analisisADOO = txt;
     }
 
     //===========================================
-    // ATRIBUTOS
+    // ATRIBUTOS (OBJETOS) ZORRODEV 2026 (≧◡≦) 
     //===========================================
-    public void agregarAtributo(String a) 
+    @Override
+    public void agregarAtributo(String nombre)
     {
-        if(a != null && !a.trim().isEmpty())
+        if(nombre != null && !nombre.trim().isEmpty())
+            atributos.add(new ClaseAtributo(nombre));
+    }
+
+    public void agregarAtributo(ClaseAtributo a)
+    {
+        if(a != null)
             atributos.add(a);
     }
 
-    public void editarAtributo(String viejo, String nuevo) 
+    @Override
+    public void editarAtributo(String viejo, String nuevo)
     {
-        int idx = atributos.indexOf(viejo);
-        if(idx >= 0)
-            atributos.set(idx, nuevo);
+        for(ClaseAtributo a : atributos)
+        {
+            if(a.nombre.equals(viejo))
+            {
+                a.nombre = nuevo;
+                return;
+            }
+        }
     }
 
-    public void borrarAtributo(String a)
+    @Override
+    public void borrarAtributo(String nombre)
     {
-        atributos.remove(a);
+        atributos.removeIf(a -> a.nombre.equals(nombre));
     }
 
     //===========================================
-    // METODOS
+    // METODOS ZORRODEV 2026 (≧◡≦)
     //===========================================
-    public void agregarMetodo(String m) 
+    @Override
+    public void agregarMetodo(String m)
     {
         if(m != null && !m.trim().isEmpty())
             metodos.add(m);
     }
 
+    @Override
     public void editarMetodo(String viejo, String nuevo)
     {
         int idx = metodos.indexOf(viejo);
@@ -157,21 +162,21 @@ public abstract class ClasePlantilla implements InterfaceContrato
             metodos.set(idx, nuevo);
     }
 
-    public void borrarMetodo(String m) 
+    @Override
+    public void borrarMetodo(String m)
     {
         metodos.remove(m);
     }
 
     //===========================================
-    // HERENCIA
+    // HERENCIA ZORRODEV 2026 (≧◡≦)
     //===========================================
-    public boolean puedeSerPadre() 
-    {
-        return true; // SealedClass lo sobrescribe
+    public boolean puedeSerPadre() {
+        return true; // SealedClass lo sobrescribe (＾▽＾)
     }
 
     //===========================================
-    // CONTRATO: ANALISIS ADOO
+    // CONTRATO: ANALISIS ADOO ZORRODEV 2026 (≧◡≦)
     //===========================================
     @Override
     public String AnalisisADOO(String extra)
@@ -180,14 +185,13 @@ public abstract class ClasePlantilla implements InterfaceContrato
     }
 
     @Override
-    public String ElijirTonoParaRelacion() 
+    public String ElijirTonoParaRelacion()
     {
-        return "TonoBajo"; // lógica simple por ahora
+        return "TonoBajo"; // lógica simple por ahora ZORRODEV 2026 (≧◡≦)
     }
 
     //===========================================
-    // POLIMORFISMO VISUAL (BASE)
-    // Subclases sobrescriben estos métodos
+    // POLIMORFISMO VISUAL (BASE) ZORRODEV 2026 (≧◡≦)
     //===========================================
     @Override
     public void Colorearse()
