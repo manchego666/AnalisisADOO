@@ -180,13 +180,16 @@ public class ClaseSQL extends ClaseEntidad
     @Override
     public void Colorearse()
     {
-        // Aquí iría la lógica de aplicar colorClase (Azul) al dibujar.
+        if(esDependiente)
+        System.out.print("\u001B[94m"); // azul claro ZORRO DEVELOPER 2026 (´∀｀)♡
+    else
+        System.out.print(Program.AZUL); // azul normal ZORRO DEVELOPER 2026 (´∀｀)♡
     }
 
     @Override
     public void ColorearseAtributos()
     {
-        // Aquí iría la lógica de aplicar colorAtributos (Rosa).
+        System.out.print(Program.ROSA); 
     }
 
     @Override
