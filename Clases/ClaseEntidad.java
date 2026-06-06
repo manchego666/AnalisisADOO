@@ -14,33 +14,60 @@ package AnalisisADOO.Clases;
  * Representa una entidad documentable genérica.
  * Sirve como base para subclases especializadas (POO, SQL, Sealed).
  */
-public abstract class ClaseEntidad extends ClasePlantilla
+public class ClaseEntidad extends ClasePlantilla
 {
     public ClaseEntidad(String nombreClase, String namespace)
     {
         super(nombreClase, namespace);
-        // Por defecto, una entidad se considera "Normal" (POO la usará).
-        // SQL y Sealed podrán dejar tipoClase en null o sobreescribir comportamiento.
     }
 
-    /**
-     * ListarDatosEntidad
-     * La implementación concreta se hará en las subclases (POO, SQL),
-     * ya que el menú y las opciones dependen del tipo de entidad.
-     */
-    @Override
-    public abstract void ListarDatosEntidad();
-
-    /**
-     * Colorearse / ColorearseAtributos / ColorearseMetodos
-     * Se implementan en subclases para demostrar polimorfismo visual.
-     */
-    @Override
-    public abstract void Colorearse();
+    //===========================================
+    // MÉTODOS DEL CONTRATO (ya vienen de ClasePlantilla)
+    // Solo implementamos lo que ClasePlantilla dejó abstracto
+    //===========================================
 
     @Override
-    public abstract void ColorearseAtributos();
+    public String AnalisisADOO()
+    {
+        return "Analisis de la clase " + nombreClase + ":\n" + analisisADOO;
+    }
 
     @Override
-    public abstract void ColorearseMetodos();
+    public String ElijirTonoParaRelacion()
+    {
+        return "TonoBajo"; // lógica simple por ahora
+    }
+
+    //===========================================
+    // POLIMORFISMO VISUAL (por defecto)
+    // Las subclases (POO, SQL, Sealed) lo sobrescriben
+    //===========================================
+    @Override
+    public void Colorearse()
+    {
+        System.out.print("\u001B[37m"); // blanco por defecto
+    }
+
+    @Override
+    public void ColorearseAtributos()
+    {
+        System.out.print("\u001B[32m"); // verde por defecto
+    }
+
+    @Override
+    public void ColorearseMetodos()
+    {
+        System.out.print("\u001B[31m"); // rojo por defecto
+    }
+
+    //===========================================
+    // MENÚ PRINCIPAL (abstracto)
+    // Las subclases lo implementan
+    //===========================================
+    @Override
+    public void ListarDatosEntidad()
+    {
+        // ClaseEntidad no tiene menú propio
+        // ClasePOO y ClaseSQL implementan este método
+    }
 }
