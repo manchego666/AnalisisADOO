@@ -18,4 +18,11 @@ public class SealedClass extends ClasePOO
         this.tipoClase    = null;
         this.colorClase   = "Dorado"; // Ejemplo de color especial.
     }
+
+    @Override
+    public void Colorearse() 
+    {
+    System.out.print(Program.DORADO);
+    }
+
 }
