@@ -330,18 +330,18 @@ public class ClasePOO extends ClaseEntidad
     @Override
     public void Colorearse()
     {
-        // Aquí iría la lógica de aplicar colorClase (Naranja) al dibujar.
+        System.out.print(Program.NARANJA);
     }
 
     @Override
     public void ColorearseAtributos()
     {
-        // Aquí iría la lógica de aplicar colorAtributos (Verde).
+        System.out.print(Program.VERDE);
     }
 
     @Override
     public void ColorearseMetodos()
     {
-        // Aquí iría la lógica de aplicar colorMetodos (Rojo).
+        System.out.print(Program.ROJO);
     }
 }
