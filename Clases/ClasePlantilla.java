@@ -20,150 +20,52 @@ import java.util.List;
  */
 public abstract class ClasePlantilla implements InterfaceContrato
 {
-    // DATOS BASICOS
+    //===========================================
+    // CAMPOS BASE
+    //===========================================
     protected String nombreClase;
     protected String namespace;
 
-    // LISTAS DE MIEMBROS
+    protected ClaseEnums.TipoClase tipoClase; // POO usa esto, SQL no
+    protected String clasePadre;              // nombre de la clase padre
+    protected double ordenDecimal;            // para diagramas
+
     protected List<String> atributos;
     protected List<String> metodos;
 
-    // HERENCIA / RELACIONES
-    protected String clasePadre;
-    protected List<String> clasesHijas;
+    protected String analisisADOO = "";
 
-    // ORDEN PARA DIAGRAMA (1.00, 1.01, etc.)
-    protected double ordenDecimal;
+    // Para herencia
+    protected List<String> clasesHijas = new ArrayList<>();
 
-    // COLORES
+    // Colores (polimorfismo visual)
     protected String colorClase;
     protected String colorAtributos;
     protected String colorMetodos;
 
-    // TIPO DE CLASE (solo aplica para POO)
-    protected ClaseEnums.TipoClase tipoClase;
-
-    // ANALISIS / DESCRIPCION ADOO
-    protected String analisisADOO;
-
+    //===========================================
+    // CONSTRUCTOR
+    //===========================================
     public ClasePlantilla(String nombreClase, String namespace)
     {
-        this.nombreClase   = nombreClase;
-        this.namespace     = namespace;
+        this.nombreClase = nombreClase;
+        this.namespace = namespace;
 
-        this.atributos     = new ArrayList<>();
-        this.metodos       = new ArrayList<>();
-        this.clasesHijas   = new ArrayList<>();
+        this.atributos = new ArrayList<>();
+        this.metodos = new ArrayList<>();
+        this.clasePadre = null;
+        this.ordenDecimal = 0.0;
 
-        this.clasePadre    = null;
-        this.ordenDecimal  = 0.0;
-
-        // Colores por defecto (podrán sobreescribirse en subclases).
-        this.colorClase      = "Blanco";
-        this.colorAtributos  = "Verde";
-        this.colorMetodos    = "Rojo";
-
-        this.tipoClase     = null; // POO la usará, SQL/Sealed pueden dejarla null.
-        this.analisisADOO  = "";
+        // Colores por defecto (subclases los sobrescriben)
+        this.colorClase = "\u001B[37m";     // blanco
+        this.colorAtributos = "\u001B[32m"; // verde
+        this.colorMetodos = "\u001B[31m";   // rojo
     }
 
-    //========================
-    // IMPLEMENTACION BASE DEL CONTRATO
-    //========================
-
-    @Override
-    public String AnalisisADOO()
-    {
-        return analisisADOO;
-    }
-
-    @Override
-    public void setAnalisisADOO(String txt)
-    {
-        this.analisisADOO = txt;
-    }
-
-    // ATRIBUTOS
-    @Override
-    public List<String> getAtributos()
-    {
-        return atributos;
-    }
-
-    @Override
-    public void agregarAtributo(String atributo)
-    {
-        if(atributo != null && !atributo.trim().isEmpty())
-            atributos.add(atributo);
-    }
-
-    @Override
-    public void editarAtributo(String viejo, String nuevo)
-    {
-        int idx = atributos.indexOf(viejo);
-        if(idx >= 0 && nuevo != null && !nuevo.trim().isEmpty())
-        {
-            atributos.set(idx, nuevo);
-        }
-    }
-
-    @Override
-    public void borrarAtributo(String atributo)
-    {
-        atributos.remove(atributo);
-    }
-
-    // METODOS
-    @Override
-    public List<String> getMetodos()
-    {
-        return metodos;
-    }
-
-    @Override
-    public void agregarMetodo(String metodo)
-    {
-        if(metodo != null && !metodo.trim().isEmpty())
-            metodos.add(metodo);
-    }
-
-    @Override
-    public void editarMetodo(String viejo, String nuevo)
-    {
-        int idx = metodos.indexOf(viejo);
-        if(idx >= 0 && nuevo != null && !nuevo.trim().isEmpty())
-        {
-            metodos.set(idx, nuevo);
-        }
-    }
-
-    @Override
-    public void borrarMetodo(String metodo)
-    {
-        metodos.remove(metodo);
-    }
-
-    //========================
-    // METODOS ABSTRACTOS / POLIMORFISMO
-    //========================
-
-    @Override
-    public abstract void ListarDatosEntidad();
-
-    @Override
-    public abstract void Colorearse();
-
-    @Override
-    public abstract void ColorearseAtributos();
-
-    @Override
-    public abstract void ColorearseMetodos();
-
-    //========================
-    // GETTERS/SETTERS DE APOYO
-    //========================
-
-    public String getNombreClase()
+    //===========================================
+    // GETTERS / SETTERS
+    //===========================================
+    public String getNombreClase() 
     {
         return nombreClase;
     }
@@ -173,38 +75,141 @@ public abstract class ClasePlantilla implements InterfaceContrato
         return namespace;
     }
 
-    public double getOrdenDecimal()
-    {
-        return ordenDecimal;
-    }
-
-    public void setOrdenDecimal(double ordenDecimal)
-    {
-        this.ordenDecimal = ordenDecimal;
-    }
-
     public String getClasePadre()
     {
         return clasePadre;
     }
 
-    public void setClasePadre(String clasePadre)
+    public void setClasePadre(String padre) 
     {
-        this.clasePadre = clasePadre;
+        this.clasePadre = padre;
     }
 
-    public List<String> getClasesHijas()
+    public double getOrdenDecimal() 
+    {
+        return ordenDecimal;
+    }
+
+    public void setOrdenDecimal(double valor)
+    {
+        this.ordenDecimal = valor;
+    }
+
+    public List<String> getAtributos() 
+    {
+        return atributos;
+    }
+
+    public List<String> getMetodos()
+    {
+        return metodos;
+    }
+
+    public List<String> getClasesHijas() 
     {
         return clasesHijas;
     }
 
-    public ClaseEnums.TipoClase getTipoClase()
+    public String AnalisisADOO()
     {
-        return tipoClase;
+        return analisisADOO;
     }
 
-    public void setTipoClase(ClaseEnums.TipoClase tipoClase)
+    public void setAnalisisADOO(String txt) 
     {
-        this.tipoClase = tipoClase;
+        this.analisisADOO = txt;
     }
+
+    //===========================================
+    // ATRIBUTOS
+    //===========================================
+    public void agregarAtributo(String a) 
+    {
+        if(a != null && !a.trim().isEmpty())
+            atributos.add(a);
+    }
+
+    public void editarAtributo(String viejo, String nuevo) 
+    {
+        int idx = atributos.indexOf(viejo);
+        if(idx >= 0)
+            atributos.set(idx, nuevo);
+    }
+
+    public void borrarAtributo(String a)
+    {
+        atributos.remove(a);
+    }
+
+    //===========================================
+    // METODOS
+    //===========================================
+    public void agregarMetodo(String m) 
+    {
+        if(m != null && !m.trim().isEmpty())
+            metodos.add(m);
+    }
+
+    public void editarMetodo(String viejo, String nuevo)
+    {
+        int idx = metodos.indexOf(viejo);
+        if(idx >= 0)
+            metodos.set(idx, nuevo);
+    }
+
+    public void borrarMetodo(String m) 
+    {
+        metodos.remove(m);
+    }
+
+    //===========================================
+    // HERENCIA
+    //===========================================
+    public boolean puedeSerPadre() 
+    {
+        return true; // SealedClass lo sobrescribe
+    }
+
+    //===========================================
+    // CONTRATO: ANALISIS ADOO
+    //===========================================
+    @Override
+    public String AnalisisADOO(String extra)
+    {
+        return "Analisis de la clase " + nombreClase + ":\n" + analisisADOO + "\n" + extra;
+    }
+
+    @Override
+    public String ElijirTonoParaRelacion() 
+    {
+        return "TonoBajo"; // lógica simple por ahora
+    }
+
+    //===========================================
+    // POLIMORFISMO VISUAL (BASE)
+    // Subclases sobrescriben estos métodos
+    //===========================================
+    @Override
+    public void Colorearse()
+    {
+        System.out.print(colorClase);
+    }
+
+    @Override
+    public void ColorearseAtributos()
+    {
+        System.out.print(colorAtributos);
+    }
+
+    @Override
+    public void ColorearseMetodos()
+    {
+        System.out.print(colorMetodos);
+    }
+
+    //===========================================
+    // MENÚ PRINCIPAL (ABSTRACTO)
+    //===========================================
+    @Override
+    public abstract void ListarDatosEntidad();
 }
