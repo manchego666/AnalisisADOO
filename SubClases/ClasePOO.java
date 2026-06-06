@@ -11,6 +11,9 @@ package AnalisisADOO.SubClases;
 
 import AnalisisADOO.Clases.ClaseEntidad;
 import AnalisisADOO.Clases.ClaseEnums;
+import AnalisisADOO.Program;
+
+import java.util.List;
 import java.util.Scanner;
 
 // en c# public sealed class ClasePOO : ClaseEntidad  (≧ω≦) ES MI MANERA DE DECIR NADIE HEREDA A ESTA CLASE (ง'̀-'́)ง ZORRODEV 2026
@@ -28,9 +31,9 @@ public class ClasePOO extends ClaseEntidad
         this.esSealed     = false;
     }
 
-    //========================
-    // MENU INTERNO POO
-    //========================
+    //=================================
+    // MENU PRINCIPAL DE LA ENTIDAD POO  BY: ZORRODEV 2026 (⁀ᗢ⁀)
+    //=================================
     @Override
     public void ListarDatosEntidad()
     {
@@ -39,7 +42,8 @@ public class ClasePOO extends ClaseEntidad
 
         while(!salir)
         {
-            System.out.println("\n===== ENTIDAD POO: " + nombreClase + " =====");
+            Program.clearScreen();
+            System.out.println("\n===== ENTIDAD POO: " + nombreClase + " =====" + Program.RESET);
             System.out.println("TipoClase: " + (tipoClase != null ? tipoClase : "null"));
             System.out.println("Sealed   : " + (esSealed ? "SI" : "NO"));
             System.out.println("Orden    : " + ordenDecimal);
@@ -58,6 +62,7 @@ public class ClasePOO extends ClaseEntidad
             System.out.println("13. Mostrar Análisis ADOO");
             System.out.println("14. Mostrar propiedades");
             System.out.println("0. Regresar");
+            System.out.println("=====================================");
             System.out.print("Opción: ");
 
             int op = Integer.parseInt(sc.nextLine());
@@ -84,20 +89,24 @@ public class ClasePOO extends ClaseEntidad
     }
 
     //========================
-    // SUBMENUS BASICOS
+    // SUBMENUS BY: ZORRODEV 2026 (⁀ᗢ⁀)
     //========================
     private void menuAgregarAtributo(Scanner sc)
     {
+        Program.clearScreen();
         System.out.print("Nuevo atributo: ");
         String atr = sc.nextLine();
         agregarAtributo(atr);
+        Program.pause(sc);
     }
 
     private void menuEditarAtributo(Scanner sc)
     {
+        Program.clearScreen();
         if(atributos.isEmpty())
         {
             System.out.println("No hay atributos.");
+            Program.pause(sc);
             return;
         }
 
@@ -112,13 +121,17 @@ public class ClasePOO extends ClaseEntidad
         System.out.print("Nuevo valor: ");
         String nuevo = sc.nextLine();
         editarAtributo(viejo, nuevo);
+
+        Program.pause(sc);
     }
 
     private void menuBorrarAtributo(Scanner sc)
     {
+        Program.clearScreen();
         if(atributos.isEmpty())
         {
             System.out.println("No hay atributos.");
+            Program.pause(sc);
             return;
         }
 
@@ -130,6 +143,7 @@ public class ClasePOO extends ClaseEntidad
         if(idx < 0 || idx >= atributos.size()) return;
 
         borrarAtributo(atributos.get(idx));
+        Program.pause(sc);
     }
 
     private void menuAgregarMetodo(Scanner sc)
@@ -137,13 +151,16 @@ public class ClasePOO extends ClaseEntidad
         System.out.print("Nuevo método: ");
         String m = sc.nextLine();
         agregarMetodo(m);
+        Program.pause(sc);
     }
 
     private void menuEditarMetodo(Scanner sc)
     {
+        Program.clearScreen();
         if(metodos.isEmpty())
         {
             System.out.println("No hay métodos.");
+            Program.pause(sc);
             return;
         }
 
@@ -158,13 +175,17 @@ public class ClasePOO extends ClaseEntidad
         System.out.print("Nuevo valor: ");
         String nuevo = sc.nextLine();
         editarMetodo(viejo, nuevo);
+
+        Program.pause(sc);
     }
 
     private void menuBorrarMetodo(Scanner sc)
     {
+        Program.clearScreen();
         if(metodos.isEmpty())
         {
             System.out.println("No hay métodos.");
+            Program.pause(sc);
             return;
         }
 
@@ -176,10 +197,12 @@ public class ClasePOO extends ClaseEntidad
         if(idx < 0 || idx >= metodos.size()) return;
 
         borrarMetodo(metodos.get(idx));
+        Program.pause(sc);
     }
 
     private void menuCambiarTipoClase(Scanner sc)
     {
+        Program.clearScreen();
         System.out.println("Tipo actual: " + (tipoClase != null ? tipoClase : "null"));
         System.out.println("0. Normal");
         System.out.println("1. Interface");
@@ -193,37 +216,99 @@ public class ClasePOO extends ClaseEntidad
             case 1: tipoClase = ClaseEnums.TipoClase.Interface; break;
             case 2: tipoClase = ClaseEnums.TipoClase.Abstracta; break;
         }
+
+        Program.pause(sc);
     }
 
-    private void menuHeredar(Scanner sc)
+    //====================================
+    // HEREDAR BY: ZORRODEV 2026 (⁀ᗢ⁀)
+    //====================================
+   private void menuHeredar(Scanner sc) 
     {
-        // Aquí se integrará con Program.entidades para elegir padre,
-        // aplicar ordenDecimal y lógica de herencia.
-        System.out.println("Lógica de heredar se implementa desde Program (lista de entidades).");
+        Program.clearScreen();
+        System.out.println("===== HEREDAR =====");
+
+        // Listar clases compatibles (solo POO y no sealed) BY: ZORRODEV 2026 (⁀ᗢ⁀)
+        List<ClaseEntidad> lista = Program.entidades;
+
+        int index = 0;
+        for (ClaseEntidad ce : lista) 
+        {
+            if (ce instanceof ClasePOO && ce != this)
+                System.out.println(index + " - " + ce.getNombreClase());
+            index++;
+         }
+
+        System.out.println("X - Cancelar");
+        System.out.print("Seleccione clase padre: ");
+        String linea = sc.nextLine();
+
+        int idx;
+        try { idx = Integer.parseInt(linea); }
+        catch(Exception e) { return; }
+
+        if (idx < 0 || idx >= lista.size()) return;
+
+        ClaseEntidad padre = lista.get(idx);
+
+        if (!(padre instanceof ClasePOO)) 
+        {
+            System.out.println("No puedes heredar de SQL o de una clase no POO.");
+            Program.pause(sc);
+            return;
+        }
+
+        if (padre instanceof SealedClass) 
+        {
+            System.out.println("No puedes heredar de una clase sellada.");
+            Program.pause(sc);
+            return;
+        }
+
+        // Aplicar herencia (°o°)
+        this.clasePadre = padre.getNombreClase();
+        padre.getClasesHijas().add(this.getNombreClase());
+
+        // Reordenar decimales (๑°o°๑)
+        Program.ReordenarEntidades();
+
+        System.out.println("Herencia aplicada correctamente.");
+        Program.pause(sc);
     }
 
+    //============================================
+    //SELLAR / DESELLAR ZORRODEV 2026 (๑°o°๑)
+    //============================================
     private void toggleSealed()
     {
         esSealed = !esSealed;
         if(esSealed)
         {
-            // Al sellar, podrías dejar tipoClase en null si quieres marcarlo especial.
             this.tipoClase = null;
             System.out.println("Clase sellada (no podrá ser heredada).");
         }
         else
         {
-            // Al desellar, vuelve a ser POO normal.
+            // Al desellar, vuelve a ser POO normal. (๑°o°๑)
             this.tipoClase = ClaseEnums.TipoClase.Normal;
             System.out.println("Clase desellada (puede ser heredada de nuevo).");
         }
     }
 
+    //================================
+    //ENUMERACIONES ZORRODEV 2026 (๑°o°๑)
+    //================================
     private void menuAgregarEnumeracion(Scanner sc)
     {
+        Program.clearScreen();
         System.out.print("Nombre de la enumeración: ");
         String nombreEnum = sc.nextLine();
-        if(nombreEnum.trim().isEmpty()) return;
+        
+        if(nombreEnum.trim().isEmpty())
+        {
+            Program.pause(sc);
+            return;
+        }
 
         if(!ClaseEnums.EnumeracionesCreadas.containsKey(nombreEnum))
         {
@@ -235,13 +320,16 @@ public class ClasePOO extends ClaseEntidad
         {
             System.out.println("Ya existe una enumeración con ese nombre.");
         }
+        Program.pause(sc);
     }
 
     private void menuListarEnumeraciones(Scanner sc)
     {
+        Program.clearScreen();
         if(ClaseEnums.EnumeracionesCreadas.isEmpty())
         {
             System.out.println("No hay enumeraciones creadas.");
+            Program.pause(sc);
             return;
         }
 
@@ -253,15 +341,14 @@ public class ClasePOO extends ClaseEntidad
         String nombre = sc.nextLine();
         if(nombre.trim().isEmpty()) return;
 
-        if(!ClaseEnums.ListaEnumeraciones.containsKey(nombre))
-        {
-            ClaseEnums.ListaEnumeraciones.put(nombre, new java.util.ArrayList<>());
-        }
+        ClaseEnums.ListaEnumeraciones.putIfAbsent(nombre, new java.util.ArrayList<>());
 
         boolean salir = false;
         while(!salir)
         {
+            Program.clearScreen();
             System.out.println("\n===== ENUM: " + nombre + " =====");
+            
             java.util.List<String> vals = ClaseEnums.ListaEnumeraciones.get(nombre);
             for(int i=0; i<vals.size(); i++)
                 System.out.println(i + " - " + vals.get(i));
@@ -269,6 +356,7 @@ public class ClasePOO extends ClaseEntidad
             System.out.println("1. Agregar valor");
             System.out.println("0. Regresar");
             System.out.print("Opción: ");
+            
             int op = Integer.parseInt(sc.nextLine());
 
             switch(op)
@@ -286,46 +374,77 @@ public class ClasePOO extends ClaseEntidad
         }
     }
 
+
+    //============================
+    //ANALISIS ADOO ZORRODEV (⁀ᗢ⁀)
+    //============================
     private void menuAgregarAnalisisADOO(Scanner sc)
     {
+        Program.clearScreen();
         System.out.println("\n===== AGREGAR / EDITAR ANALISIS ADOO =====");
         System.out.println("Actual:");
-        System.out.println(analisisADOO);
+        System.out.println(Program.wrapText(analisisADOO, 80));
+        
         System.out.println("\nNuevo análisis:");
         String txt = sc.nextLine();
+        
         if(!txt.trim().isEmpty())
             setAnalisisADOO(txt);
+
+        Program.pause(sc);
     }
 
     private void menuMostrarAnalisisADOO()
     {
-        System.out.println("\n===== ANALISIS ADOO DE " + nombreClase + " =====");
-        System.out.println(analisisADOO);
-        System.out.println("\nPresione una tecla para regresar...");
-        try { System.in.read(); } catch(Exception e) {}
+        Program.clearScreen();
+        System.out.println("===== ANALISIS ADOO DE " + nombreClase + " =====");
+        System.out.println(Program.wrapText(analisisADOO, 80));
+        System.out.println("=====================================");
+        Program.pause(sc);
     }
 
+
+    //=========================
+    //MOSTRAR PROPIEDADES ZORRODEV 2026 (⁄ ⁄>⁄◡⁄<⁄ ⁄)
+    //=========================
     private void mostrarPropiedades()
     {
-        System.out.println("\n===== PROPIEDADES DE " + nombreClase + " =====");
-        System.out.println("Namespace : " + namespace);
-        System.out.println("TipoClase : " + (tipoClase != null ? tipoClase : "null"));
-        System.out.println("Sealed    : " + (esSealed ? "SI" : "NO"));
-        System.out.println("Padre     : " + (clasePadre != null ? clasePadre : "Ninguno"));
-        System.out.println("Orden     : " + ordenDecimal);
+       Program.clearScreen();
 
-        System.out.println("\nAtributos:");
-        for(String a : atributos) System.out.println(" - " + a);
+       Colorearse();
+       System.out.println("===== PROPIEDADES DE " + nombreClase + " =====");
+       System.out.print(Program.RESET);
 
-        System.out.println("\nMétodos:");
-        for(String m : metodos) System.out.println(" - " + m);
+       System.out.println("Namespace = " + namespace);
+       System.out.println("TipoClase: " + tipoClase);
+       System.out.println("Sealed = " + (esSealed ? "SI" : "NO"));
+       System.out.println("Padre = " + (clasePadre == null ? "Ninguno" : clasePadre));
+       System.out.println("Orden = " + ordenDecimal);
+        
+       System.out.println();
+    
+       ColorearseAtributos();
+       System.out.println("Atributos:");
+       System.out.print(Program.RESET);
+       for(String a : atributos)
+            System.out.println("- " + a);
 
-        System.out.println("\nPresione una tecla para regresar...");
-        try { System.in.read(); } catch(Exception e) {}
+       System.out.println();
+
+       ColorearseMetodos();
+       System.out.println("Métodos:");
+       System.out.print(Program.RESET);
+       for(String m : metodos)
+            System.out.println("- " + m);
+
+       System.out.println("\nAnalisis ADOO:");
+       System.out.println(Program.wrapText(analisisADOO, 80));
+        
+       Program.pause(sc);
     }
 
     //========================
-    // COLORES (POLIMORFISMO)
+    // POLIMORFISMO VISUAL ZORRODEV 2026 (๑•́‧̫•̀๑)
     //========================
     @Override
     public void Colorearse()
