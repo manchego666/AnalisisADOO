@@ -41,10 +41,18 @@ Clona el repositorio:
 
 ```bash
 git clone https://github.com/manchego666/AnalisisADOO.git
+```
+
+
 Compila con tu JDK favorito:
+```
 javac -encoding UTF-8 -d bin $(find . -name "*.java")
+```
+
 Ejecuta:
+```
 java -cp bin AnalisisADOO.Program
+```
 
 Estructura del Proyecto (≧◡≦)ノ
 
