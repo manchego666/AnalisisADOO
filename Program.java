@@ -1,22 +1,20 @@
 //=====================================
 //Autor : Christopher Diaz Gastelum
-//Firma : ZORRO DEVELOPER (＾▽＾)
+//Firma : ZORRO DEVELOPER (＾▽＾) (ง'̀-'́)ง
 //Proyecto : AnalisisADOO
 //Descripción del proyecto:
 //  Documentador basado en ADOO que ayuda a generar análisis,
 //  descripciones y diagramas de clases en consola. Este proyecto
-//  es una versión libre, pequeña y educativa. Si en el futuro
-//  creo un documentador profesional, será otro proyecto con una
-//  arquitectura distinta, posiblemente orientada a datos o en inglés.
+//  es educativo y libre para descargar, modificar y estudiar.
 //
-//Licencia:
-//  Este programa es público y puede modificarse, copiarse,
-//  compartirse y venderse libremente. Sin embargo, en caso de
-//  vender o redistribuir, es obligatorio remover mi nombre y firma
-//  para liberarme de cualquier mal uso.
-//  Si yo me dedico a hacer un documentador seria otro proyecto el cual no es compartido
-//  libremente como este.Sin embargo la estructura seria en otra 
-//  orientación talvez en ingles o datadriven.
+//Licencia (ZORRODEV 2026):
+//  - Puedes descargarlo, copiarlo, modificarlo y usarlo libremente.
+//  - NO puedes venderlo.
+//  - NO puedes apropiarte del código ni remover esta licencia.
+//  - Los derechos reservados pertenecen a ZORRODEV.
+//  - El repositorio puede pasar de público a privado en el futuro.
+//  - Si deseas crear un documentador profesional, deberás hacerlo
+//    como un proyecto nuevo con tu propia arquitectura.
 //Fecha : 06/06/2026
 //Clase : Program.java
 //Descripción de la clase:
@@ -27,26 +25,23 @@
 package AnalisisADOO;
 
 import AnalisisADOO.Clases.ClaseEntidad;
+import AnalisisADOO.Clases.ClaseAtributo;
 import AnalisisADOO.SubClases.ClasePOO;
 import AnalisisADOO.SubClases.ClaseSQL;
+import AnalisisADOO.SubClases.SealedClass;
 import AnalisisADOO.Data.DataJSON;
 import AnalisisADOO.Data.DataTEXT;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Program
 {
-
-//#region DATOS (ATRIBUTOS/LISTAS/STRING/INT/ETC)
-    ///<sumary>
+    //#region DATOS (ATRIBUTOS/LISTAS/STRING/INT/ETC)
+     ///<sumary>
     ///es static porque esta variable SOLO ESTA CLASE LO APLICA Y AQUI TE QUEDAS QUIETA NO TE MUEVAS.  (^‿^) ZORRO DEVELOPER 2026
     ///"Analisis general del sistema Documentador de Clases POO/SQL."  (≧◡≦) ZORRO DEVELOPER 2026 
     /// <summary/>
-   public static String AnalisisGeneral = "";
+    public static String AnalisisGeneral = "";
     ///<sumary>
     /// tenemos que guardar en una lista todas las entidades que
     /// vayamos agregando en la ejecución del programa.
@@ -54,7 +49,7 @@ public class Program
     /// LISTA GLOBAL DE ENTIDADES
     /// <sumary/>
     public static List<ClaseEntidad> entidades = new ArrayList<>();
-    //ZORRODEV 2026 (≧◡≦) ni para que comento que es este boleano
+
     public static boolean cambiosSinGuardar = false;
     //ZORRODEV 2026 (≧◡≦) ni para que comento que son estos sets(ಠ_ಠ)(¬_¬)
     public static final String RESET  = "\u001B[0m";
@@ -63,9 +58,11 @@ public class Program
     public static final String VERDE   = "\u001B[32m";
     public static final String ROJO    = "\u001B[31m";
     public static final String ROSA    = "\u001B[35m";
-    public static final String DORADO  = "\u001B[33m"; 
-//#endregion DATOS (ATRIBUTOS/LISTAS/STRING/INT/ETC)
-//#region METODO MAIN
+    public static final String DORADO  = "\u001B[33m";
+
+    //#endregion DATOS
+
+    //#region METODO MAIN
     public static void main(String[] ZORRODEVELOPER) //Firmado por Zorro developer (≧◡≦) ♡ cambien a args si gustan.
     {
         Scanner sc = new Scanner(System.in);
@@ -89,9 +86,8 @@ public class Program
             System.out.println("=====================================");
             System.out.print("Opción: ");
 
-            String linea = sc.nextLine();
             int op = 0;
-            try { op = Integer.parseInt(linea); } catch(Exception e) {}
+            try { op = Integer.parseInt(sc.nextLine()); } catch(Exception e) {}
 
             switch(op)
             {
@@ -107,14 +103,9 @@ public class Program
             }
         }
     }
-//#endregion METODO MAIN
+    //#endregion MAIN
 
-
-//#region METODOS/TAREAS
-
-    //========================
-    // UTILIDADES
-    //========================
+    //#region UTILIDADES
     public static void clearScreen()
     {
         try
@@ -122,10 +113,7 @@ public class Program
             System.out.print("\033[H\033[2J");
             System.out.flush();
         }
-        catch(Exception e)
-        {
-            // Si no soporta ANSI, no pasa nada.
-        }
+        catch(Exception e) {}
     }
 
     public static void pause(Scanner sc)
@@ -153,18 +141,16 @@ public class Program
         }
         return sb.toString();
     }
+    //#endregion UTILIDADES
 
-    //========================
-    // OPCION 1: ANALISIS GENERAL
-    //========================
+    //#region OPCION 1: ANALISIS GENERAL
     public static void MostrarAnalisisGeneral(Scanner sc)
     {
         clearScreen();
         System.out.println("===== ANALISIS ADOO GENERAL =====");
         if(AnalisisGeneral == null || AnalisisGeneral.trim().isEmpty())
         {
-            System.out.println("Aún no tienes el análisis general para este proyecto.");
-            System.out.println("Se recomienda agregar uno desde el menú.");
+            System.out.println("Aún no tienes el análisis general.");
         }
         else
         {
@@ -195,10 +181,9 @@ public class Program
         System.out.println("=====================================");
         pause(sc);
     }
+    //#endregion OPCION 1
 
-    //========================
-    // OPCION 2: CREAR ENTIDAD
-    //========================
+    //#region OPCION 2: CREAR ENTIDAD
     public static void CrearEntidad(Scanner sc)
     {
         clearScreen();
@@ -207,7 +192,7 @@ public class Program
         String nombre = sc.nextLine();
         if(nombre.trim().isEmpty())
         {
-            System.out.println("Nombre vacío, se cancela la creación.");
+            System.out.println("Nombre vacío, se cancela.");
             pause(sc);
             return;
         }
@@ -220,49 +205,43 @@ public class Program
         System.out.println("Tipo de entidad:");
         System.out.println("1. POO");
         System.out.println("2. SQL");
+        System.out.println("3. SEALED");
         System.out.println("0. Cancelar");
         System.out.print("Opción: ");
-        String linea = sc.nextLine();
+
         int tipo = 0;
-        try { tipo = Integer.parseInt(linea); } catch(Exception e) {}
+        try { tipo = Integer.parseInt(sc.nextLine()); } catch(Exception e) {}
 
         ClaseEntidad nueva = null;
 
         switch(tipo)
         {
-            case 1:
-                nueva = new ClasePOO(nombre, ns);
-                break;
-            case 2:
-                nueva = new ClaseSQL(nombre, ns);
-                break;
+            case 1: nueva = new ClasePOO(nombre, ns); break;
+            case 2: nueva = new ClaseSQL(nombre, ns); break;
+            case 3: nueva = new SealedClass(nombre, ns); break;
             default:
                 System.out.println("Creación cancelada.");
                 pause(sc);
                 return;
         }
 
-        double orden = entidades.size() + 1;
-        nueva.setOrdenDecimal(orden);
-
+        nueva.setOrdenDecimal(entidades.size() + 1);
         entidades.add(nueva);
         ReordenarEntidades();
         cambiosSinGuardar = true;
-        System.out.println("Entidad creada y agregada a la lista.");
-        System.out.println("=====================================");
+
+        System.out.println("Entidad creada correctamente.");
         pause(sc);
     }
+    //#endregion OPCION 2
 
-    //========================
-    // OPCION 3: SELECCIONAR ENTIDAD
-    //========================
+    //#region OPCION 3: SELECCIONAR ENTIDAD
     public static void SeleccionarEntidad(Scanner sc)
     {
         if(entidades.isEmpty())
         {
             clearScreen();
             System.out.println("No hay entidades creadas.");
-            System.out.println("=====================================");
             pause(sc);
             return;
         }
@@ -275,8 +254,8 @@ public class Program
             System.out.println(i + " - " + ce.getNombreClase() + " (Orden: " + ce.getOrdenDecimal() + ")");
         }
         System.out.println("X - Cancelar");
-        System.out.println("=====================================");
         System.out.print("Seleccione índice: ");
+
         String linea = sc.nextLine();
         int idx;
         try { idx = Integer.parseInt(linea); } catch(Exception e) { return; }
@@ -284,23 +263,19 @@ public class Program
         if(idx < 0 || idx >= entidades.size())
             return;
 
-        ClaseEntidad seleccionada = entidades.get(idx);
-        seleccionada.ListarDatosEntidad(); // dentro de la entidad se ve su análisis, etc.
-
+        entidades.get(idx).ListarDatosEntidad();
         ReordenarEntidades();
         cambiosSinGuardar = true;
     }
+    //#endregion OPCION 3
 
-    //========================
-    // OPCION 4: DIAGRAMA DE CLASES
-    //========================
+    //#region OPCION 4: DIAGRAMA DE CLASES
     public static void MostrarDiagramas(Scanner sc)
     {
         if(entidades.isEmpty())
         {
             clearScreen();
-            System.out.println("No hay entidades para diagramar. Crea alguna primero.");
-            System.out.println("=====================================");
+            System.out.println("No hay entidades para diagramar.");
             pause(sc);
             return;
         }
@@ -314,24 +289,22 @@ public class Program
         {
             String nombre = ce.getNombreClase();
             String padre  = ce.getClasePadre();
-            String encabezado;
 
-            if(padre != null && !padre.trim().isEmpty())
-                encabezado = "=== " + nombre + " : " + padre + " ===";
-            else
-                encabezado = "=== " + nombre + " ===";
+            String encabezado = (padre != null && !padre.trim().isEmpty())
+                    ? "=== " + nombre + " : " + padre + " ==="
+                    : "=== " + nombre + " ===";
 
-            // Color según tipo (muy simple, puedes refinarlo con getters específicos)
-            String colorClase = NARANJA;
-            if(ce instanceof ClaseSQL) colorClase = AZUL;
+            String color = NARANJA;
+            if(ce instanceof ClaseSQL) color = AZUL;
+            if(ce instanceof SealedClass) color = DORADO;
 
-            System.out.println(colorClase + encabezado + RESET);
+            System.out.println(color + encabezado + RESET);
             System.out.println("Namespace: " + ce.getNamespace());
             System.out.println("Orden   : " + ce.getOrdenDecimal());
 
             System.out.println(VERDE + "Atributos:" + RESET);
-            for(String a : ce.getAtributos())
-                System.out.println(" - " + a);
+            for(ClaseAtributo a : ce.getAtributos())
+                System.out.println(" - " + a.toPOOString());
 
             System.out.println(ROJO + "Métodos:" + RESET);
             for(String m : ce.getMetodos())
@@ -342,18 +315,17 @@ public class Program
 
         pause(sc);
     }
+    //#endregion OPCION 4
 
-    //========================
-    // OPCION 6/7/8: GUARDAR / CARGAR / EXPORTAR
-    //========================
+    //#region OPCION 6/7/8: GUARDAR / CARGAR / EXPORTAR
     public static void GuardarJSON(Scanner sc)
     {
         clearScreen();
-        System.out.print("Nombre de archivo JSON (ej: proyecto.json): ");
+        System.out.print("Nombre de archivo JSON: ");
         String nombre = sc.nextLine();
         if(nombre.trim().isEmpty())
         {
-            System.out.println("Nombre vacío, se cancela.");
+            System.out.println("Nombre vacío.");
             pause(sc);
             return;
         }
@@ -362,13 +334,12 @@ public class Program
         if(ok)
         {
             cambiosSinGuardar = false;
-            System.out.println("Datos guardados en JSON correctamente.");
+            System.out.println("Guardado correctamente.");
         }
         else
         {
-            System.out.println("Ocurrió un error al guardar JSON.");
+            System.out.println("Error al guardar JSON.");
         }
-        System.out.println("=====================================");
         pause(sc);
     }
 
@@ -379,7 +350,7 @@ public class Program
         String nombre = sc.nextLine();
         if(nombre.trim().isEmpty())
         {
-            System.out.println("Nombre vacío, se cancela.");
+            System.out.println("Nombre vacío.");
             pause(sc);
             return;
         }
@@ -391,41 +362,38 @@ public class Program
             entidades       = res.entidades;
             ReordenarEntidades();
             cambiosSinGuardar = false;
-            System.out.println("Datos cargados correctamente desde JSON.");
+            System.out.println("Datos cargados correctamente.");
         }
         else
         {
-            System.out.println("No se pudo cargar el archivo JSON.");
+            System.out.println("Error al cargar JSON.");
         }
-        System.out.println("=====================================");
         pause(sc);
     }
 
     public static void ExportarTXT(Scanner sc)
     {
         clearScreen();
-        System.out.print("Nombre de archivo TXT (ej: proyecto.txt): ");
+        System.out.print("Nombre de archivo TXT: ");
         String nombre = sc.nextLine();
         if(nombre.trim().isEmpty())
         {
-            System.out.println("Nombre vacío, se cancela.");
+            System.out.println("Nombre vacío.");
             pause(sc);
             return;
         }
 
         boolean ok = DataTEXT.Exportar(nombre, AnalisisGeneral, entidades);
         if(ok)
-            System.out.println("Exportado correctamente a TXT.");
+            System.out.println("Exportado correctamente.");
         else
-            System.out.println("Ocurrió un error al exportar TXT.");
+            System.out.println("Error al exportar TXT.");
 
-        System.out.println("=====================================");
         pause(sc);
     }
+    //#endregion OPCION 6/7/8
 
-    //========================
-    // LOGICA INTERNA: REORDENAR ENTIDADES
-    //========================
+    //#region LOGICA INTERNA
     public static void ReordenarEntidades()
     {
         Collections.sort(entidades, Comparator.comparingDouble(ClaseEntidad::getOrdenDecimal));
@@ -438,47 +406,26 @@ public class Program
         }
     }
 
-    //========================
-    // METODO DE APOYO
-    //========================
     public static ClaseEntidad BuscarEntidadPorNombre(String nombre)
     {
         for(ClaseEntidad ce : entidades)
-        {
             if(ce.getNombreClase().equalsIgnoreCase(nombre))
                 return ce;
-        }
         return null;
     }
+    //#endregion LOGICA INTERNA
 
-    //========================
-    // CONFIRMAR SALIDA
-    //========================
+    //#region CONFIRMAR SALIDA
     public static boolean ConfirmarSalida(Scanner sc)
     {
         if(cambiosSinGuardar)
         {
-            System.out.println("\nNo has guardado los datos aún. ¿Quieres guardar antes de salir? (S/N)");
+            System.out.println("\nNo has guardado los datos. ¿Guardar antes de salir? (S/N)");
             String r = sc.nextLine();
             if(r.equalsIgnoreCase("S"))
-            {
                 GuardarJSON(sc);
-            }
         }
         return true;
     }
-//#endregion METODOS/TAREAS
+    //#endregion CONFIRMAR SALIDA
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
