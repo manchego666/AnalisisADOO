@@ -6,7 +6,6 @@
 //Descripción de la clase:
 //Variante de ClasePOO que puede heredar pero NO puede ser heredada.
 //=====================================
-
 package AnalisisADOO.SubClases;
 
 import AnalisisADOO.Clases.ClaseEnums;
@@ -21,14 +20,15 @@ public class SealedClass extends ClasePOO
     {
         super(nombreClase, namespace);
 
-        // Una clase sellada NO tiene tipoClase (ノಠ益ಠ)ノ ZORRODEV 2026
+        // Una clase sellada NO tiene tipoClase (ノಠ益ಠ)ノ ZORRODEV 2026  (EN ESTE PROGRAMA PARA CAMBIOS VISUALES.)
         this.tipoClase = null;
 
-        // Colores especiales
         this.colorClase     = Program.DORADO;
         this.colorAtributos = Program.VERDE;
         this.colorMetodos   = Program.ROJO;
     }
+
+
 
     //===========================================
     // POLIMORFISMO VISUAL ZORRODEV 2026 (⁄ ⁄•⁄ω⁄•⁄ ⁄)
@@ -54,8 +54,8 @@ public class SealedClass extends ClasePOO
     //===========================================
     // MOSTRAR PROPIEDADES (VERSIÓN SELLADA)
     //===========================================
-    @Override
-    protected void mostrarPropiedades(Scanner sc)
+    // ATENCION TU QUE MIRAS EL CODIGO: sin @Override para no exigir método en la superclase.  REPARAR DESPUES ZORRODEV 2026 (≧◡≦) (SI APLICA).
+    private void mostrarPropiedades(Scanner sc)
     {
         Program.clearScreen();
 
@@ -90,14 +90,16 @@ public class SealedClass extends ClasePOO
         Program.pause(sc);
     }
 
+
     //===========================================
     // BLOQUEAR HERENCIA (ง'̀-'́)ง
     //===========================================
     @Override
     public boolean puedeSerPadre()
     {
-        return false; // ninguna clase puede heredar de esta
+        return false;
     }
+
 
     //===========================================
     // DESSELLAR (convertir a ClasePOO normal)
@@ -108,3 +110,4 @@ public class SealedClass extends ClasePOO
         this.colorClase = Program.NARANJA;
     }
 }
+    
