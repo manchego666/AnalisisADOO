@@ -65,6 +65,19 @@ public abstract class ClasePlantilla implements InterfaceContrato
     //===========================================
     // GETTERS / SETTERS ZORRODEV 2026 (≧◡≦)
     //===========================================
+
+    public ClaseEnums.TipoClase getTipoClase() {
+    return tipoClase;
+    }
+
+    public void setTipoClase(ClaseEnums.TipoClase tipo) {
+    this.tipoClase = tipo;
+    }
+
+    public String getAnalisisADOO() {
+    return analisisADOO;
+    }
+
     public String getNombreClase() {
         return nombreClase;
     }
