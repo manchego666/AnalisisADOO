@@ -283,7 +283,7 @@ public class Program
         }
 
         clearScreen();
-        System.out.println("===== DIAGRAMA DE CLASES (TEXTO) =====");
+        System.out.println("===== DIAGRAMA DE CLASES (ADOO) =====");
 
         Collections.sort(entidades, Comparator.comparingDouble(ClaseEntidad::getOrdenDecimal));
 
