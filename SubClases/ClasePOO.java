@@ -11,6 +11,8 @@ package AnalisisADOO.SubClases;
 
 import AnalisisADOO.Clases.ClaseEntidad;
 import AnalisisADOO.Clases.ClaseEnums;
+import AnalisisADOO.Clases.ClaseAtributo;
+import AnalisisADOO.Clases.ClaseTipoAtributo;
 import AnalisisADOO.Program;
 
 import java.util.List;
@@ -24,11 +26,11 @@ public class ClasePOO extends ClaseEntidad
     public ClasePOO(String nombreClase, String namespace)
     {
         super(nombreClase, namespace);
-        this.tipoClase    = ClaseEnums.TipoClase.Normal;
-        this.colorClase   = "Naranja";
+        this.tipoClase      = ClaseEnums.TipoClase.Normal;
+        this.colorClase     = "Naranja";
         this.colorAtributos = "Verde";
         this.colorMetodos   = "Rojo";
-        this.esSealed     = false;
+        this.esSealed       = false;
     }
 
     //=================================
@@ -82,24 +84,57 @@ public class ClasePOO extends ClaseEntidad
                 case 11: menuListarEnumeraciones(sc); break;
                 case 12: menuAgregarAnalisisADOO(sc); break;
                 case 13: menuMostrarAnalisisADOO(); break;
-                case 14: mostrarPropiedades(); break;
+                case 14: mostrarPropiedades(sc); break;
                 case 0: salir = true; break;
             }
         }
     }
 
-    //========================
-    // SUBMENUS BY: ZORRODEV 2026 (⁀ᗢ⁀)
-    //========================
+    //===========================================
+    // SUBMENÚ PROFESIONAL PARA AGREGAR ATRIBUTO
+    //===========================================
     private void menuAgregarAtributo(Scanner sc)
     {
         Program.clearScreen();
-        System.out.print("Nuevo atributo: ");
-        String atr = sc.nextLine();
-        agregarAtributo(atr);
+        System.out.println("===== NUEVO ATRIBUTO POO =====");
+
+        // Nombre
+        System.out.print("Nombre del atributo: ");
+        String nombre = sc.nextLine();
+        if(nombre.trim().isEmpty()) return;
+
+        ClaseAtributo atr = new ClaseAtributo(nombre);
+
+        // Encapsulación
+        System.out.println("\nEncapsulación:");
+        for(int i=0; i<ClaseTipoAtributo.Encapsulaciones.size(); i++)
+            System.out.println((i+1) + ". " + ClaseTipoAtributo.Encapsulaciones.get(i));
+        System.out.print("Opción: ");
+        int enc = Integer.parseInt(sc.nextLine()) - 1;
+        if(enc >= 0 && enc < ClaseTipoAtributo.Encapsulaciones.size())
+            atr.encapsulacion = ClaseTipoAtributo.Encapsulaciones.get(enc);
+
+        // Tipo de atributo
+        System.out.println("\nTipo de atributo:");
+        for(int i=0; i<ClaseTipoAtributo.TiposAtributo.size(); i++)
+            System.out.println((i+1) + ". " + ClaseTipoAtributo.TiposAtributo.get(i));
+        System.out.print("Opción: ");
+        int ta = Integer.parseInt(sc.nextLine()) - 1;
+        if(ta >= 0 && ta < ClaseTipoAtributo.TiposAtributo.size())
+            atr.tipoAtributo = ClaseTipoAtributo.TiposAtributo.get(ta);
+
+        // Tipo de dato
+        atr.tipoDato = elegirTipoDato(sc);
+
+        atributos.add(atr);
+
+        System.out.println("\nAtributo agregado correctamente.");
         Program.pause(sc);
     }
 
+    //===========================================
+    // SUBMENÚ PARA EDITAR ATRIBUTO
+    //===========================================
     private void menuEditarAtributo(Scanner sc)
     {
         Program.clearScreen();
@@ -110,21 +145,70 @@ public class ClasePOO extends ClaseEntidad
             return;
         }
 
+        System.out.println("===== EDITAR ATRIBUTO =====");
         for(int i=0; i<atributos.size(); i++)
-            System.out.println(i + " - " + atributos.get(i));
+            System.out.println(i + " - " + atributos.get(i).toPOOString());
 
         System.out.print("Índice a editar: ");
         int idx = Integer.parseInt(sc.nextLine());
         if(idx < 0 || idx >= atributos.size()) return;
 
-        String viejo = atributos.get(idx);
-        System.out.print("Nuevo valor: ");
-        String nuevo = sc.nextLine();
-        editarAtributo(viejo, nuevo);
+        ClaseAtributo atr = atributos.get(idx);
 
-        Program.pause(sc);
+        boolean salir = false;
+        while(!salir)
+        {
+            Program.clearScreen();
+            System.out.println("Editando: " + atr.toPOOString());
+            System.out.println("1. Cambiar nombre");
+            System.out.println("2. Cambiar encapsulación");
+            System.out.println("3. Cambiar tipo de atributo");
+            System.out.println("4. Cambiar tipo de dato");
+            System.out.println("0. Regresar");
+            System.out.print("Opción: ");
+
+            int op = Integer.parseInt(sc.nextLine());
+            switch(op)
+            {
+                case 1:
+                    System.out.print("Nuevo nombre: ");
+                    atr.nombre = sc.nextLine();
+                    break;
+
+                case 2:
+                    System.out.println("\nEncapsulación:");
+                    for(int i=0; i<ClaseTipoAtributo.Encapsulaciones.size(); i++)
+                        System.out.println((i+1) + ". " + ClaseTipoAtributo.Encapsulaciones.get(i));
+                    System.out.print("Opción: ");
+                    int enc = Integer.parseInt(sc.nextLine()) - 1;
+                    if(enc >= 0 && enc < ClaseTipoAtributo.Encapsulaciones.size())
+                        atr.encapsulacion = ClaseTipoAtributo.Encapsulaciones.get(enc);
+                    break;
+
+                case 3:
+                    System.out.println("\nTipo de atributo:");
+                    for(int i=0; i<ClaseTipoAtributo.TiposAtributo.size(); i++)
+                        System.out.println((i+1) + ". " + ClaseTipoAtributo.TiposAtributo.get(i));
+                    System.out.print("Opción: ");
+                    int ta = Integer.parseInt(sc.nextLine()) - 1;
+                    if(ta >= 0 && ta < ClaseTipoAtributo.TiposAtributo.size())
+                        atr.tipoAtributo = ClaseTipoAtributo.TiposAtributo.get(ta);
+                    break;
+
+                case 4:
+                    atr.tipoDato = elegirTipoDato(sc);
+                    break;
+
+                case 0:
+                    salir = true;
+                    break;
+            }
+        }
     }
 
+    //===========================================
+    // BORRAR ATRIBUTO
+    //===========================================
     private void menuBorrarAtributo(Scanner sc)
     {
         Program.clearScreen();
@@ -135,17 +219,96 @@ public class ClasePOO extends ClaseEntidad
             return;
         }
 
+        System.out.println("===== BORRAR ATRIBUTO =====");
         for(int i=0; i<atributos.size(); i++)
-            System.out.println(i + " - " + atributos.get(i));
+            System.out.println(i + " - " + atributos.get(i).toPOOString());
 
         System.out.print("Índice a borrar: ");
         int idx = Integer.parseInt(sc.nextLine());
         if(idx < 0 || idx >= atributos.size()) return;
 
-        borrarAtributo(atributos.get(idx));
+        atributos.remove(idx);
+        System.out.println("Atributo eliminado.");
         Program.pause(sc);
     }
 
+    //===========================================
+    // MENÚ PARA ELEGIR TIPO DE DATO
+    //===========================================
+    private String elegirTipoDato(Scanner sc)
+    {
+        System.out.println("\n===== TIPO DE DATO =====");
+        System.out.println("1. string");
+        System.out.println("2. int");
+        System.out.println("3. bool");
+        System.out.println("4. double");
+        System.out.println("5. float");
+        System.out.println("6. char");
+        System.out.println("7. DateTime");
+        System.out.println("8. List<T>");
+        System.out.println("9. Dictionary<K,V>");
+        System.out.println("10. object");
+        System.out.println("11. dynamic");
+        System.out.println("12. decimal");
+        System.out.println("13. long");
+        System.out.println("14. short");
+        System.out.println("15. byte");
+        System.out.println("16. Enumeración creada");
+        System.out.println("17. Clase POO del proyecto");
+        System.out.print("Opción: ");
+
+        int op = Integer.parseInt(sc.nextLine());
+
+        switch(op)
+        {
+            case 1: return "string";
+            case 2: return "int";
+            case 3: return "bool";
+            case 4: return "double";
+            case 5: return "float";
+            case 6: return "char";
+            case 7: return "DateTime";
+
+            case 8:
+                System.out.print("Tipo interno T: ");
+                return "List<" + sc.nextLine() + ">";
+
+            case 9:
+                System.out.print("Tipo clave K: ");
+                String k = sc.nextLine();
+                System.out.print("Tipo valor V: ");
+                String v = sc.nextLine();
+                return "Dictionary<" + k + "," + v + ">";
+
+            case 10: return "object";
+            case 11: return "dynamic";
+            case 12: return "decimal";
+            case 13: return "long";
+            case 14: return "short";
+            case 15: return "byte";
+
+            case 16:
+                System.out.println("Enumeraciones disponibles:");
+                for(String key : ClaseEnums.EnumeracionesCreadas.keySet())
+                    System.out.println("- " + key);
+                System.out.print("Nombre: ");
+                return sc.nextLine();
+
+            case 17:
+                System.out.println("Clases POO disponibles:");
+                for(ClaseEntidad ce : Program.entidades)
+                    if(ce instanceof ClasePOO)
+                        System.out.println("- " + ce.getNombreClase());
+                System.out.print("Nombre: ");
+                return sc.nextLine();
+        }
+
+        return "string";
+    }
+
+    //===========================================
+    // MÉTODOS (IGUAL QUE ANTES)
+    //===========================================
     private void menuAgregarMetodo(Scanner sc)
     {
         System.out.print("Nuevo método: ");
@@ -223,21 +386,20 @@ public class ClasePOO extends ClaseEntidad
     //====================================
     // HEREDAR BY: ZORRODEV 2026 (⁀ᗢ⁀)
     //====================================
-   private void menuHeredar(Scanner sc) 
+    private void menuHeredar(Scanner sc)
     {
         Program.clearScreen();
         System.out.println("===== HEREDAR =====");
 
-        // Listar clases compatibles (solo POO y no sealed) BY: ZORRODEV 2026 (⁀ᗢ⁀)
         List<ClaseEntidad> lista = Program.entidades;
 
         int index = 0;
-        for (ClaseEntidad ce : lista) 
+        for (ClaseEntidad ce : lista)
         {
             if (ce instanceof ClasePOO && ce != this)
                 System.out.println(index + " - " + ce.getNombreClase());
             index++;
-         }
+        }
 
         System.out.println("X - Cancelar");
         System.out.print("Seleccione clase padre: ");
@@ -251,25 +413,23 @@ public class ClasePOO extends ClaseEntidad
 
         ClaseEntidad padre = lista.get(idx);
 
-        if (!(padre instanceof ClasePOO)) 
+        if (!(padre instanceof ClasePOO))
         {
             System.out.println("No puedes heredar de SQL o de una clase no POO.");
             Program.pause(sc);
             return;
         }
 
-        if (padre instanceof SealedClass) 
+        if (padre instanceof SealedClass)
         {
             System.out.println("No puedes heredar de una clase sellada.");
             Program.pause(sc);
             return;
         }
 
-        // Aplicar herencia (°o°)
         this.clasePadre = padre.getNombreClase();
         padre.getClasesHijas().add(this.getNombreClase());
 
-        // Reordenar decimales (๑°o°๑)
         Program.ReordenarEntidades();
 
         System.out.println("Herencia aplicada correctamente.");
@@ -277,7 +437,7 @@ public class ClasePOO extends ClaseEntidad
     }
 
     //============================================
-    //SELLAR / DESELLAR ZORRODEV 2026 (๑°o°๑)
+    // SELLAR / DESELLAR ZORRODEV 2026 (๑°o°๑)
     //============================================
     private void toggleSealed()
     {
@@ -289,21 +449,20 @@ public class ClasePOO extends ClaseEntidad
         }
         else
         {
-            // Al desellar, vuelve a ser POO normal. (๑°o°๑)
             this.tipoClase = ClaseEnums.TipoClase.Normal;
             System.out.println("Clase desellada (puede ser heredada de nuevo).");
         }
     }
 
     //================================
-    //ENUMERACIONES ZORRODEV 2026 (๑°o°๑)
+    // ENUMERACIONES ZORRODEV 2026
     //================================
     private void menuAgregarEnumeracion(Scanner sc)
     {
         Program.clearScreen();
         System.out.print("Nombre de la enumeración: ");
         String nombreEnum = sc.nextLine();
-        
+
         if(nombreEnum.trim().isEmpty())
         {
             Program.pause(sc);
@@ -348,7 +507,7 @@ public class ClasePOO extends ClaseEntidad
         {
             Program.clearScreen();
             System.out.println("\n===== ENUM: " + nombre + " =====");
-            
+
             java.util.List<String> vals = ClaseEnums.ListaEnumeraciones.get(nombre);
             for(int i=0; i<vals.size(); i++)
                 System.out.println(i + " - " + vals.get(i));
@@ -356,7 +515,7 @@ public class ClasePOO extends ClaseEntidad
             System.out.println("1. Agregar valor");
             System.out.println("0. Regresar");
             System.out.print("Opción: ");
-            
+
             int op = Integer.parseInt(sc.nextLine());
 
             switch(op)
@@ -374,9 +533,8 @@ public class ClasePOO extends ClaseEntidad
         }
     }
 
-
     //============================
-    //ANALISIS ADOO ZORRODEV (⁀ᗢ⁀)
+    // ANALISIS ADOO ZORRODEV (⁀ᗢ⁀)
     //============================
     private void menuAgregarAnalisisADOO(Scanner sc)
     {
@@ -384,10 +542,10 @@ public class ClasePOO extends ClaseEntidad
         System.out.println("\n===== AGREGAR / EDITAR ANALISIS ADOO =====");
         System.out.println("Actual:");
         System.out.println(Program.wrapText(analisisADOO, 80));
-        
+
         System.out.println("\nNuevo análisis:");
         String txt = sc.nextLine();
-        
+
         if(!txt.trim().isEmpty())
             setAnalisisADOO(txt);
 
@@ -400,47 +558,46 @@ public class ClasePOO extends ClaseEntidad
         System.out.println("===== ANALISIS ADOO DE " + nombreClase + " =====");
         System.out.println(Program.wrapText(analisisADOO, 80));
         System.out.println("=====================================");
-        Program.pause(sc);
+        Program.pause(new Scanner(System.in));
     }
 
-
     //=========================
-    //MOSTRAR PROPIEDADES ZORRODEV 2026 (⁄ ⁄>⁄◡⁄<⁄ ⁄)
+    // MOSTRAR PROPIEDADES ZORRODEV 2026 (⁄ ⁄>⁄◡⁄<⁄ ⁄)
     //=========================
-    private void mostrarPropiedades()
+    private void mostrarPropiedades(Scanner sc)
     {
-       Program.clearScreen();
+        Program.clearScreen();
 
-       Colorearse();
-       System.out.println("===== PROPIEDADES DE " + nombreClase + " =====");
-       System.out.print(Program.RESET);
+        Colorearse();
+        System.out.println("===== PROPIEDADES DE " + nombreClase + " =====");
+        System.out.print(Program.RESET);
 
-       System.out.println("Namespace = " + namespace);
-       System.out.println("TipoClase: " + tipoClase);
-       System.out.println("Sealed = " + (esSealed ? "SI" : "NO"));
-       System.out.println("Padre = " + (clasePadre == null ? "Ninguno" : clasePadre));
-       System.out.println("Orden = " + ordenDecimal);
-        
-       System.out.println();
-    
-       ColorearseAtributos();
-       System.out.println("Atributos:");
-       System.out.print(Program.RESET);
-       for(String a : atributos)
-            System.out.println("- " + a);
+        System.out.println("Namespace = " + namespace);
+        System.out.println("TipoClase: " + tipoClase);
+        System.out.println("Sealed = " + (esSealed ? "SI" : "NO"));
+        System.out.println("Padre = " + (clasePadre == null ? "Ninguno" : clasePadre));
+        System.out.println("Orden = " + ordenDecimal);
 
-       System.out.println();
+        System.out.println();
 
-       ColorearseMetodos();
-       System.out.println("Métodos:");
-       System.out.print(Program.RESET);
-       for(String m : metodos)
+        ColorearseAtributos();
+        System.out.println("Atributos:");
+        System.out.print(Program.RESET);
+        for(ClaseAtributo a : atributos)
+            System.out.println("- " + a.toPOOString());
+
+        System.out.println();
+
+        ColorearseMetodos();
+        System.out.println("Métodos:");
+        System.out.print(Program.RESET);
+        for(String m : metodos)
             System.out.println("- " + m);
 
-       System.out.println("\nAnalisis ADOO:");
-       System.out.println(Program.wrapText(analisisADOO, 80));
-        
-       Program.pause(sc);
+        System.out.println("\nAnalisis ADOO:");
+        System.out.println(Program.wrapText(analisisADOO, 80));
+
+        Program.pause(sc);
     }
 
     //========================
