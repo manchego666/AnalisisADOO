@@ -25,19 +25,18 @@ public abstract class ClasePlantilla implements InterfaceContrato
     protected String nombreClase;
     protected String namespace;
 
-    protected ClaseEnums.TipoClase tipoClase; // POO usa esto, SQL no (＾▽＾)
-    protected String clasePadre;              // nombre de la clase padre (✿◠‿◠)
+    protected ClaseEnums.TipoClase tipoClase;   // POO usa esto, SQL no (＾▽＾)
+    protected String clasePadre;               // nombre de la clase padre (✿◠‿◠)
     protected double ordenDecimal;            // para diagramas (✿◠‿◠)
 
-    // AHORA SON OBJETOS, NO STRINGS
     protected List<ClaseAtributo> atributos;
     protected List<String> metodos;
 
     protected String analisisADOO = "";
 
-    // Para herencia ZORRODEV 2026 (≧◡≦)
+     // Para herencia ZORRODEV 2026 (≧◡≦)
     protected List<String> clasesHijas = new ArrayList<>();
-
+     
     // Colores (polimorfismo visual) ZORRODEV 2026 (≧◡≦)
     protected String colorClase;
     protected String colorAtributos;
@@ -56,26 +55,26 @@ public abstract class ClasePlantilla implements InterfaceContrato
         this.clasePadre = null;
         this.ordenDecimal = 0.0;
 
-        // Colores por defecto (subclases los sobrescriben)
-        this.colorClase = "\u001B[37m";     // blanco ZORRODEV 2026 (≧◡≦)
+        this.colorClase     = "\u001B[37m"; // blanco ZORRODEV 2026 (≧◡≦)
         this.colorAtributos = "\u001B[32m"; // verde ZORRODEV 2026 (≧◡≦)
-        this.colorMetodos = "\u001B[31m";   // rojo ZORRODEV 2026 (≧◡≦)
+        this.colorMetodos   = "\u001B[31m"; // rojo ZORRODEV 2026 (≧◡≦)
     }
 
+    
     //===========================================
     // GETTERS / SETTERS ZORRODEV 2026 (≧◡≦)
     //===========================================
 
     public ClaseEnums.TipoClase getTipoClase() {
-    return tipoClase;
+        return tipoClase;
     }
 
     public void setTipoClase(ClaseEnums.TipoClase tipo) {
-    this.tipoClase = tipo;
+        this.tipoClase = tipo;
     }
 
     public String getAnalisisADOO() {
-    return analisisADOO;
+        return analisisADOO;
     }
 
     public String getNombreClase() {
@@ -114,6 +113,7 @@ public abstract class ClasePlantilla implements InterfaceContrato
         return clasesHijas;
     }
 
+    @Override
     public String AnalisisADOO() {
         return analisisADOO;
     }
@@ -122,9 +122,8 @@ public abstract class ClasePlantilla implements InterfaceContrato
         this.analisisADOO = txt;
     }
 
-    //===========================================
-    // ATRIBUTOS (OBJETOS) ZORRODEV 2026 (≧◡≦) 
-    //===========================================
+    // ATRIBUTOS
+
     @Override
     public void agregarAtributo(String nombre)
     {
@@ -157,9 +156,8 @@ public abstract class ClasePlantilla implements InterfaceContrato
         atributos.removeIf(a -> a.nombre.equals(nombre));
     }
 
-    //===========================================
-    // METODOS ZORRODEV 2026 (≧◡≦)
-    //===========================================
+    // MÉTODOS
+
     @Override
     public void agregarMetodo(String m)
     {
@@ -181,16 +179,19 @@ public abstract class ClasePlantilla implements InterfaceContrato
         metodos.remove(m);
     }
 
+
     //===========================================
     // HERENCIA ZORRODEV 2026 (≧◡≦)
     //===========================================
+
     public boolean puedeSerPadre() {
-        return true; // SealedClass lo sobrescribe (＾▽＾)
+        return true;
     }
 
     //===========================================
     // CONTRATO: ANALISIS ADOO ZORRODEV 2026 (≧◡≦)
     //===========================================
+
     @Override
     public String AnalisisADOO(String extra)
     {
@@ -200,12 +201,13 @@ public abstract class ClasePlantilla implements InterfaceContrato
     @Override
     public String ElijirTonoParaRelacion()
     {
-        return "TonoBajo"; // lógica simple por ahora ZORRODEV 2026 (≧◡≦)
+        return "TonoBajo";
     }
 
     //===========================================
     // POLIMORFISMO VISUAL (BASE) ZORRODEV 2026 (≧◡≦)
     //===========================================
+
     @Override
     public void Colorearse()
     {
@@ -224,9 +226,8 @@ public abstract class ClasePlantilla implements InterfaceContrato
         System.out.print(colorMetodos);
     }
 
-    //===========================================
-    // MENÚ PRINCIPAL (ABSTRACTO)
-    //===========================================
+    // MENÚ
+
     @Override
     public abstract void ListarDatosEntidad();
 }
