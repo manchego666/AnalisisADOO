@@ -6,11 +6,9 @@
 //Descripción de la clase:
 //Clase base que actúa como puente para las entidades POO, SQL y Sealed.
 //=====================================
-
 package AnalisisADOO.Clases;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ClaseEntidad
@@ -32,20 +30,14 @@ public class ClaseEntidad extends ClasePlantilla
     // clasesHijas (List<String>)
     // analisisADOO
     //===========================================
-
     public ClaseEntidad(String nombreClase, String namespace)
     {
         super(nombreClase, namespace);
 
-        // Asegurar listas inicializadas (por si ClasePlantilla cambia)
-        if(this.atributos == null) this.atributos = new ArrayList<>();
-        if(this.metodos == null)   this.metodos   = new ArrayList<>();
-        if(this.clasesHijas == null) this.clasesHijas = new ArrayList<>();
+        if(this.atributos == null)    this.atributos    = new ArrayList<>();
+        if(this.metodos == null)      this.metodos      = new ArrayList<>();
+        if(this.clasesHijas == null)  this.clasesHijas  = new ArrayList<>();
     }
-
-    //===========================================
-    // MÉTODOS DEL CONTRATO (de ClasePlantilla) DONDE ANALIZAREMOS PUES (ノಠ益ಠ)ノ (ಠ_ಠ) ZORRODEV 2026
-    //===========================================
 
     @Override
     public String AnalisisADOO()
@@ -62,7 +54,6 @@ public class ClaseEntidad extends ClasePlantilla
     //===========================================
     // ATRIBUTOS (puente para POO y SQL)
     //===========================================
-
     @Override
     public void agregarAtributo(String a)
     {
@@ -90,10 +81,10 @@ public class ClaseEntidad extends ClasePlantilla
         atributos.removeIf(x -> x.nombre.equals(a));
     }
 
+
     //===========================================
     // MÉTODOS (solo POO los usa) SQL POR EL MOMENTO NO (ಥ﹏ಥ) ZORRODEV 2026
     //===========================================
-
     @Override
     public void agregarMetodo(String metodo)
     {
@@ -115,13 +106,12 @@ public class ClaseEntidad extends ClasePlantilla
         metodos.remove(metodo);
     }
 
-    //===========================================
-    // HERENCIA (puede ser sobrescrito por Sealed)
-    //===========================================
+    @Override
     public boolean puedeSerPadre()
     {
         return true; // SealedClass lo sobrescribe (ง'̀-'́)ง
     }
+
 
     //===========================================
     // POLIMORFISMO VISUAL (por defecto)
@@ -129,19 +119,19 @@ public class ClaseEntidad extends ClasePlantilla
     @Override
     public void Colorearse()
     {
-        System.out.print("\u001B[37m"); // blanco por defecto (ZORRODEV 2026)
+        System.out.print("\u001B[37m");
     }
 
     @Override
     public void ColorearseAtributos()
     {
-        System.out.print("\u001B[32m"); // verde por defecto
+        System.out.print("\u001B[32m");
     }
 
     @Override
     public void ColorearseMetodos()
     {
-        System.out.print("\u001B[31m"); // rojo por defecto
+        System.out.print("\u001B[31m");
     }
 
     //===========================================
@@ -153,6 +143,6 @@ public class ClaseEntidad extends ClasePlantilla
     {
         // ClaseEntidad no tiene menú propio
         // ClasePOO y ClaseSQL implementan este método
-        System.out.println("ClaseEntidad no tiene menú propio (ಥ﹏ಥ)");
+        System.out.println("ClaseEntidad no tiene menú propio.");
     }
 }
