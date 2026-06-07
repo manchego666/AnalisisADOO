@@ -1,68 +1,55 @@
-🦊 AnalisisADOO — Documentador ADOO en Consola
-By: ZORRO DEVELOPER (＾▽＾) 2026
+# 🦊 AnalisisADOO — Documentador ADOO en Consola  
+**By: ZORRO DEVELOPER (＾▽＾) 2026**
 
-AnalisisADOO es un documentador educativo basado en la metodología
-Análisis y Diseño Orientado a Objetos (ADOO).
-Permite crear entidades POO, SQL y SEALED, generar análisis,
-diagramas de clases en texto, y exportar documentación en JSON y TXT.
+AnalisisADOO es un **documentador educativo** basado en la metodología  
+**Análisis y Diseño Orientado a Objetos (ADOO)**.  
+Permite crear entidades **POO**, **SQL** y **SEALED**, generar análisis,  
+diagramas de clases en texto, y exportar documentación en **JSON** y **TXT**.
 
-Este proyecto es una versión libre, pequeña y educativa, creada para
+Este proyecto es una versión **libre, pequeña y educativa**, creada para  
 aprender arquitectura, diseño y documentación de clases en consola.
 
-✨ Características Principales
-Crear entidades:
+---
 
-🟧 POO
+## ✨ Características Principales
 
-🟦 SQL
+- Crear entidades:
+  - 🟧 **POO**
+  - 🟦 **SQL**
+  - 🟨 **SEALED**
+- Atributos completos:
+  - Encapsulación  
+  - Tipo de atributo  
+  - Tipo de dato  
+  - PK / FK / Nullable  
+- Métodos (solo POO y SEALED)
+- Herencia entre clases POO
+- Análisis ADOO por clase y general
+- Diagrama de clases en texto
+- Exportación:
+  - 📄 JSON (estructura completa)
+  - 📄 TXT (documentación legible)
+- Colores ANSI para polimorfismo visual
+- Sistema de ordenamiento automático
+- Guardado y carga del proyecto
 
-🟨 SEALED
+---
 
-Atributos completos:
+## 📦 Instalación
 
-Encapsulación
-
-Tipo de atributo
-
-Tipo de dato
-
-PK / FK / Nullable
-
-Métodos (solo POO y SEALED)
-
-Herencia entre clases POO
-
-Análisis ADOO por clase y general
-
-Diagrama de clases en texto
-
-Exportación:
-
-📄 JSON (estructura completa)
-
-📄 TXT (documentación legible)
-
-Colores ANSI para polimorfismo visual
-
-Sistema de ordenamiento automático
-
-Guardado y carga del proyecto
-
-📦 Instalación
 Clona el repositorio:
 
-bash
+```bash
 git clone https://github.com/manchego666/AnalisisADOO.git
 Compila con tu JDK favorito:
-
-bash
 javac -encoding UTF-8 -d bin $(find . -name "*.java")
 Ejecuta:
-
-bash
 java -cp bin AnalisisADOO.Program
-🧩 Estructura del Proyecto
-Código
+
+Estructura del Proyecto (≧◡≦)ノ
+
+```
+
 AnalisisADOO/
 │
 ├── Clases/
@@ -84,10 +71,12 @@ AnalisisADOO/
 │
 ├── Program.java
 └── README.md
-🖥️ Uso General
+
+
+Uso General (ﾉ≧ڡ≦)
 Al ejecutar el programa verás un menú principal:
 
-Código
+``` 
 1. Mostrar Análisis ADOO General
 2. Crear Entidad
 3. Seleccionar Entidad
@@ -97,8 +86,11 @@ Código
 7. Cargar desde JSON
 8. Exportar a TXT
 0. Salir
+```
+
 Cada entidad tiene su propio menú interno para:
 
+``` 
 Agregar/editar/borrar atributos
 
 Agregar/editar/borrar métodos (POO/SEALED)
@@ -111,7 +103,7 @@ Ver análisis
 
 Ver propiedades
 
-📤 Exportación
+Exportación
 JSON
 Guarda absolutamente todo el proyecto:
 
@@ -143,9 +135,12 @@ Atributos
 Métodos
 
 Herencia
+```
 
+``` 
 🛡️ Licencia ZORRODEV 2026
 Este proyecto es libre para descargar, estudiar y modificar, pero:
+
 
 ❌ NO se permite:
 Vender el software
@@ -166,6 +161,8 @@ Compartir siempre que se mantenga esta licencia
 Derechos reservados:
 ZORRODEV mantiene todos los derechos sobre este proyecto.  
 El repositorio puede pasar de público a privado en cualquier momento.
+```
+
 
 🦊 Autor
 Christopher Díaz Gastélum  
