@@ -1,47 +1,58 @@
-# 🦊 AnalisisADOO — Documentador ADOO en Consola  
-**By: ZORRO DEVELOPER (＾▽＾) 2026**
+🦊 AnalisisADOO — Documentador ADOO en Consola
+By: ZORRO DEVELOPER (＾▽＾) 2026
 
-AnalisisADOO es un **documentador educativo** basado en la metodología  
-**Análisis y Diseño Orientado a Objetos (ADOO)**.  
-Permite crear entidades **POO**, **SQL** y **SEALED**, generar análisis,  
-diagramas de clases en texto, y exportar documentación en **JSON** y **TXT**.
+AnalisisADOO es un documentador educativo basado en la metodología
+Análisis y Diseño Orientado a Objetos (ADOO).
+Permite crear entidades POO, SQL y SEALED, generar análisis,
+diagramas de clases en texto, y exportar documentación en JSON y TXT.
 
-Este proyecto es una versión **libre, pequeña y educativa**, creada para  
+Este proyecto es una versión libre, pequeña y educativa, creada para
 aprender arquitectura, diseño y documentación de clases en consola.
 
----
+✨ Características Principales
+Crear entidades:
 
-## ✨ Características Principales
+🟧 POO
 
-- Crear entidades:
-  - 🟧 **POO**
-  - 🟦 **SQL**
-  - 🟨 **SEALED**
-- Atributos completos:
-  - Encapsulación  
-  - Tipo de atributo  
-  - Tipo de dato  
-  - PK / FK / Nullable  
-- Métodos (solo POO y SEALED)
-- Herencia entre clases POO
-- Análisis ADOO por clase y general
-- Diagrama de clases en texto
-- Exportación:
-  - 📄 JSON (estructura completa)
-  - 📄 TXT (documentación legible)
-- Colores ANSI para polimorfismo visual
-- Sistema de ordenamiento automático
-- Guardado y carga del proyecto
+🟦 SQL
 
----
+🟨 SEALED
 
-## 📦 Instalación
+Atributos completos:
 
+Encapsulación
+
+Tipo de atributo
+
+Tipo de dato
+
+PK / FK / Nullable
+
+Métodos (solo POO y SEALED)
+
+Herencia entre clases POO
+
+Análisis ADOO por clase y general
+
+Diagrama de clases en texto
+
+Exportación:
+
+📄 JSON (estructura completa)
+
+📄 TXT (documentación legible)
+
+Colores ANSI para polimorfismo visual
+
+Sistema de ordenamiento automático
+
+Guardado y carga del proyecto
+
+📦 Instalación
 Clona el repositorio:
 
-```bash
+bash
 git clone https://github.com/manchego666/AnalisisADOO.git
-
 Compila con tu JDK favorito:
 
 bash
