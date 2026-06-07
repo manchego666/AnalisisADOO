@@ -48,7 +48,7 @@ java -cp bin AnalisisADOO.Program
 
 Estructura del Proyecto (≧◡≦)ノ
 
-```
+
 
 AnalisisADOO/
 │
@@ -71,7 +71,7 @@ AnalisisADOO/
 │
 ├── Program.java
 └── README.md
-
+```
 
 Uso General (ﾉ≧ڡ≦)
 Al ejecutar el programa verás un menú principal:
