@@ -22,12 +22,14 @@ public class ClaseSQL extends ClaseEntidad
     public ClaseSQL(String nombreClase, String namespace)
     {
         super(nombreClase, namespace);
-        this.tipoClase = null; // SQL no usa tipo POO (๑•﹏•)
-        this.colorClase = Program.AZUL;
+        this.tipoClase      = null;
+        this.colorClase     = Program.AZUL;
         this.colorAtributos = Program.ROSA;
-        this.colorMetodos = Program.GRIS; 
-        this.esDependiente = false;
+        this.colorMetodos   = Program.GRIS;
+        this.esDependiente  = false;
     }
+
+
 
     //===========================================
     // SQL NO PERMITE MÉTODOS (ಥ﹏ಥ) ( POR EL MOMENTO DESPUES TALVEZ SP,VW,TG) ZORRODEV2026 (｡•́︿•̀｡)
@@ -98,9 +100,11 @@ public class ClaseSQL extends ClaseEntidad
         }
     }
 
+
     //===========================================
     // AGREGAR ATRIBUTO SQL PROFESIONAL (ಥ﹏ಥ)
     //===========================================
+
     private void menuAgregarAtributo(Scanner sc)
     {
         Program.clearScreen();
@@ -112,19 +116,15 @@ public class ClaseSQL extends ClaseEntidad
 
         ClaseAtributo atr = new ClaseAtributo(nombre);
 
-        // Tipo SQL
         atr.tipoDato = elegirTipoDatoSQL(sc);
 
-        // PK
         System.out.print("¿Es PK? (s/n): ");
         atr.esPK = sc.nextLine().trim().equalsIgnoreCase("s");
 
-        // FK
         System.out.print("¿Es FK? (s/n): ");
         atr.esFK = sc.nextLine().trim().equalsIgnoreCase("s");
         if(atr.esFK) esDependiente = true;
 
-        // NULL
         System.out.print("¿Permite NULL? (s/n): ");
         atr.esNullable = sc.nextLine().trim().equalsIgnoreCase("s");
 
@@ -136,7 +136,8 @@ public class ClaseSQL extends ClaseEntidad
 
     //===========================================
     // EDITAR ATRIBUTO SQL PROFESIONAL
-    //===========================================
+    //===========================================   
+
     private void menuEditarAtributo(Scanner sc)
     {
         Program.clearScreen();
@@ -205,9 +206,7 @@ public class ClaseSQL extends ClaseEntidad
         }
     }
 
-    //===========================================
-    // BORRAR ATRIBUTO SQL
-    //===========================================
+    
     private void menuBorrarAtributo(Scanner sc)
     {
         Program.clearScreen();
@@ -228,16 +227,12 @@ public class ClaseSQL extends ClaseEntidad
 
         atributos.remove(idx);
 
-        // Recalcular dependencia
         esDependiente = atributos.stream().anyMatch(a -> a.esFK);
 
         System.out.println("Atributo eliminado.");
         Program.pause(sc);
     }
 
-    //===========================================
-    // ENLAZAR PK/FK (simple toggle)
-    //===========================================
     private void menuEnlazarPKFK(Scanner sc)
     {
         Program.clearScreen();
@@ -247,9 +242,6 @@ public class ClaseSQL extends ClaseEntidad
         Program.pause(sc);
     }
 
-    //===========================================
-    // TIPOS SQL PROFESIONALES
-    //===========================================
     private String elegirTipoDatoSQL(Scanner sc)
     {
         System.out.println("\n===== TIPO DE DATO SQL =====");
@@ -280,15 +272,12 @@ public class ClaseSQL extends ClaseEntidad
             case 5: return "DECIMAL";
             case 6: return "FLOAT";
             case 7: return "DOUBLE";
-
             case 8:
                 System.out.print("Tamaño VARCHAR: ");
                 return "VARCHAR(" + sc.nextLine() + ")";
-
             case 9:
                 System.out.print("Tamaño CHAR: ");
                 return "CHAR(" + sc.nextLine() + ")";
-
             case 10: return "TEXT";
             case 11: return "DATE";
             case 12: return "DATETIME";
@@ -299,9 +288,6 @@ public class ClaseSQL extends ClaseEntidad
         return "INT";
     }
 
-    //===========================================
-    // ANALISIS ADOO
-    //===========================================
     private void menuAgregarAnalisisADOO(Scanner sc)
     {
         Program.clearScreen();
@@ -326,9 +312,6 @@ public class ClaseSQL extends ClaseEntidad
         Program.pause(sc);
     }
 
-    //===========================================
-    // MOSTRAR PROPIEDADES SQL PROFESIONAL
-    //===========================================
     private void mostrarPropiedades(Scanner sc)
     {
         Program.clearScreen();
@@ -355,25 +338,22 @@ public class ClaseSQL extends ClaseEntidad
         Program.pause(sc);
     }
 
-    //===========================================
-    // POLIMORFISMO VISUAL ZORRODEV 2026 (´∀｀)♡
-    //===========================================
     @Override
     public void Colorearse()
     {
         if(esDependiente)
-            System.out.print("\u001B[94m"); // azul claro dependiente
+            System.out.print("\u001B[94m");
         else
-            System.out.print(Program.AZUL); // azul normal
+            System.out.print(Program.AZUL);
     }
 
     @Override
     public void ColorearseAtributos()
     {
-        System.out.print(Program.ROSA); 
+        System.out.print(Program.ROSA);
     }
 
-     @Override
+    @Override
     public void ColorearseMetodos()
     {
         // SQL no usa métodos por el momento, pero se deja por contrato. EN UN FUTURO SERIA BUENO AGREGAR SP , FUNC , DISPARADORES
