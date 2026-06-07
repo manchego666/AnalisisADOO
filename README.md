@@ -53,12 +53,15 @@ Ejecuta:
 
 ```
 java -cp bin AnalisisADOO.Program
+
 ```
+
+
 
 Estructura del Proyecto (≧◡≦)ノ
-```
 
-```
+``` 
+
 AnalisisADOO/
 │
 ├── Clases/
@@ -80,7 +83,8 @@ AnalisisADOO/
 │
 ├── Program.java
 └── README.md
-```
+``` 
+
 
 Uso General (ﾉ≧ڡ≦)
 Al ejecutar el programa verás un menú principal:
@@ -95,11 +99,12 @@ Al ejecutar el programa verás un menú principal:
 7. Cargar desde JSON
 8. Exportar a TXT
 0. Salir
-```
+``` 
+
 
 Cada entidad tiene su propio menú interno para:
 
-``` 
+
 Agregar/editar/borrar atributos
 
 Agregar/editar/borrar métodos (POO/SEALED)
@@ -144,9 +149,8 @@ Atributos
 Métodos
 
 Herencia
-```
 
-``` 
+
 🛡️ Licencia ZORRODEV 2026
 Este proyecto es libre para descargar, estudiar y modificar, pero:
 
@@ -170,7 +174,7 @@ Compartir siempre que se mantenga esta licencia
 Derechos reservados:
 ZORRODEV mantiene todos los derechos sobre este proyecto.  
 El repositorio puede pasar de público a privado en cualquier momento.
-```
+
 
 
 🦊 Autor
