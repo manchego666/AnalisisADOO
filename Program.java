@@ -59,6 +59,8 @@ public class Program
     public static final String ROJO    = "\u001B[31m";
     public static final String ROSA    = "\u001B[35m";
     public static final String DORADO  = "\u001B[33m";
+    public static final String GRIS = "\u001B[90m";
+
 
     //#endregion DATOS
 
