@@ -1,16 +1,19 @@
 //=====================================
 //Autor : Christopher Diaz Gastelum
-//Firma : ZORRO DEVELOPER (＾▽＾)
+//Firma : ZORRO DEVELOPER (＾▽＾) (ง'̀-'́)ง
 //Proyecto : AnalisisADOO
 //Clase : SealedClass.java
 //Descripción de la clase:
-//Variante de ClasePOO que puede heredar pero no puede ser heredada.
+//Variante de ClasePOO que puede heredar pero NO puede ser heredada.
 //=====================================
 
 package AnalisisADOO.SubClases;
 
 import AnalisisADOO.Clases.ClaseEnums;
+import AnalisisADOO.Clases.ClaseAtributo;
 import AnalisisADOO.Program;
+
+import java.util.Scanner;
 
 public class SealedClass extends ClasePOO
 {
@@ -22,9 +25,9 @@ public class SealedClass extends ClasePOO
         this.tipoClase = null;
 
         // Colores especiales
-        this.colorClase = Program.DORADO;
+        this.colorClase     = Program.DORADO;
         this.colorAtributos = Program.VERDE;
-        this.colorMetodos = Program.ROJO;
+        this.colorMetodos   = Program.ROJO;
     }
 
     //===========================================
@@ -49,10 +52,10 @@ public class SealedClass extends ClasePOO
     }
 
     //===========================================
-    // MOSTRAR PROPIEDADES (VERSIÓN SELLADA) ZORRODEV 2026 (⁄ ⁄•⁄ω⁄•⁄ ⁄)
+    // MOSTRAR PROPIEDADES (VERSIÓN SELLADA)
     //===========================================
     @Override
-    protected void mostrarPropiedades(java.util.Scanner sc)
+    protected void mostrarPropiedades(Scanner sc)
     {
         Program.clearScreen();
 
@@ -70,8 +73,8 @@ public class SealedClass extends ClasePOO
         ColorearseAtributos();
         System.out.println("Atributos:");
         System.out.print(Program.RESET);
-        for(String a : atributos)
-            System.out.println("- " + a);
+        for(ClaseAtributo a : atributos)
+            System.out.println("- " + a.toPOOString());
 
         System.out.println();
 
@@ -88,7 +91,7 @@ public class SealedClass extends ClasePOO
     }
 
     //===========================================
-    // BLOQUEAR HERENCIA    ZORRODEV 2026 (⁄ ⁄•⁄ω⁄•⁄ ⁄)
+    // BLOQUEAR HERENCIA (ง'̀-'́)ง
     //===========================================
     @Override
     public boolean puedeSerPadre()
@@ -97,11 +100,11 @@ public class SealedClass extends ClasePOO
     }
 
     //===========================================
-    // DESSELLAR (convertir a ClasePOO normal) ZORRODEV 2026 (⁄ ⁄•⁄ω⁄•⁄ ⁄)
+    // DESSELLAR (convertir a ClasePOO normal)
     //===========================================
     public void desellar()
     {
-        this.tipoClase = ClaseEnums.TipoClase.Normal;
+        this.tipoClase  = ClaseEnums.TipoClase.Normal;
         this.colorClase = Program.NARANJA;
     }
 }
