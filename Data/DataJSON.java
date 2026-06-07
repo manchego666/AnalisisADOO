@@ -1,64 +1,99 @@
 //=====================================
+//Autor : Christopher Diaz Gastelum
+//Firma : ZORRO DEVELOPER (＾▽＾) (ง'̀-'́)ง
+//Proyecto : AnalisisADOO
 //Clase : DataJSON.java
 //Descripción:
-//Maneja guardado/carga muy simple en JSON de:
+//Guardado y carga COMPLETA en JSON de:
 //- AnalisisGeneral
-//- Lista de entidades (nombre, namespace, tipo simple, atributos, métodos, análisis)
+//- Entidades POO / SQL / Sealed
+//- Atributos completos (POO y SQL)
+//- Métodos
+//- Herencia
+//- TipoClase
+//- Colores
+//- Orden
 //=====================================
 
 package AnalisisADOO.Data;
 
-import AnalisisADOO.Clases.ClaseEntidad;
-import AnalisisADOO.SubClases.ClasePOO;
-import AnalisisADOO.SubClases.ClaseSQL;
+import AnalisisADOO.Clases.*;
+import AnalisisADOO.SubClases.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DataJSON
 {
+    // Resultado de carga  (✿◠‿◠)
     public static class ResultadoCarga
     {
         public String analisisGeneral;
         public List<ClaseEntidad> entidades;
     }
 
+    //=====================================
+    // GUARDAR JSON ZORRODEV 2026 (ง'̀-'́)ง
+    //=====================================
     public static boolean Guardar(String archivo, String analisisGeneral, List<ClaseEntidad> entidades)
     {
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(archivo)))
         {
             bw.write("{\n");
-            bw.write("  \"AnalisisGeneral\": " + toJsonString(analisisGeneral) + ",\n");
+            bw.write("  \"AnalisisGeneral\": " + toJson(analisisGeneral) + ",\n");
             bw.write("  \"Entidades\": [\n");
 
             for(int i=0; i<entidades.size(); i++)
             {
                 ClaseEntidad ce = entidades.get(i);
+
                 String tipo = "POO";
                 if(ce instanceof ClaseSQL) tipo = "SQL";
+                if(ce instanceof SealedClass) tipo = "SEALED";
 
                 bw.write("    {\n");
-                bw.write("      \"Nombre\": " + toJsonString(ce.getNombreClase()) + ",\n");
-                bw.write("      \"Namespace\": " + toJsonString(ce.getNamespace()) + ",\n");
-                bw.write("      \"Tipo\": " + toJsonString(tipo) + ",\n");
-                bw.write("      \"Analisis\": " + toJsonString(ce.AnalisisADOO()) + ",\n");
+                bw.write("      \"Nombre\": " + toJson(ce.getNombreClase()) + ",\n");
+                bw.write("      \"Namespace\": " + toJson(ce.getNamespace()) + ",\n");
+                bw.write("      \"Tipo\": " + toJson(tipo) + ",\n");
+                bw.write("      \"TipoClase\": " + toJson(ce.getTipoClase() == null ? "null" : ce.getTipoClase().toString()) + ",\n");
+                bw.write("      \"Padre\": " + toJson(ce.getClasePadre()) + ",\n");
+                bw.write("      \"Orden\": " + ce.getOrdenDecimal() + ",\n");
+                bw.write("      \"Analisis\": " + toJson(ce.getAnalisisADOO()) + ",\n");
 
-                // Atributos
-                bw.write("      \"Atributos\": [");
+                // Atributos COMPLETOS
+                bw.write("      \"Atributos\": [\n");
                 for(int j=0; j<ce.getAtributos().size(); j++)
                 {
-                    bw.write(toJsonString(ce.getAtributos().get(j)));
-                    if(j < ce.getAtributos().size()-1) bw.write(", ");
+                    ClaseAtributo a = ce.getAtributos().get(j);
+                    bw.write("        {\n");
+                    bw.write("          \"Nombre\": " + toJson(a.nombre) + ",\n");
+                    bw.write("          \"Encapsulacion\": " + toJson(a.encapsulacion) + ",\n");
+                    bw.write("          \"TipoAtributo\": " + toJson(a.tipoAtributo) + ",\n");
+                    bw.write("          \"TipoDato\": " + toJson(a.tipoDato) + ",\n");
+                    bw.write("          \"PK\": " + a.esPK + ",\n");
+                    bw.write("          \"FK\": " + a.esFK + ",\n");
+                    bw.write("          \"Nullable\": " + a.esNullable + "\n");
+                    bw.write("        }");
+                    if(j < ce.getAtributos().size()-1) bw.write(",");
+                    bw.write("\n");
                 }
-                bw.write("],\n");
+                bw.write("      ],\n");
 
                 // Métodos
                 bw.write("      \"Metodos\": [");
                 for(int j=0; j<ce.getMetodos().size(); j++)
                 {
-                    bw.write(toJsonString(ce.getMetodos().get(j)));
+                    bw.write(toJson(ce.getMetodos().get(j)));
                     if(j < ce.getMetodos().size()-1) bw.write(", ");
+                }
+                bw.write("],\n");
+
+                // Clases hijas
+                bw.write("      \"ClasesHijas\": [");
+                for(int j=0; j<ce.getClasesHijas().size(); j++)
+                {
+                    bw.write(toJson(ce.getClasesHijas().get(j)));
+                    if(j < ce.getClasesHijas().size()-1) bw.write(", ");
                 }
                 bw.write("]\n");
 
@@ -73,16 +108,14 @@ public class DataJSON
         }
         catch(Exception e)
         {
+            e.printStackTrace();
             return false;
         }
     }
 
-    private static String toJsonString(String s)
-    {
-        if(s == null) s = "";
-        return "\"" + s.replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
-    }
-
+    //=====================================
+    // CARGAR JSON ZORRODEV 2026 (ノಠ益ಠ)ノ
+    //=====================================
     public static ResultadoCarga Cargar(String archivo)
     {
         try(BufferedReader br = new BufferedReader(new FileReader(archivo)))
@@ -101,34 +134,57 @@ public class DataJSON
             String bloqueEntidades = extraerArray(json, "Entidades");
             if(bloqueEntidades == null) return res;
 
-            // Parseo muy simple por objetos separados por "},{"
-            String[] objs = bloqueEntidades.split("\\},\\s*\\{");
+            String[] objs = dividirObjetos(bloqueEntidades);
+
             for(String obj : objs)
             {
-                String o = obj.trim();
-                if(!o.startsWith("{")) o = "{" + o;
-                if(!o.endsWith("}")) o = o + "}";
-
-                String nombre    = extraerCampo(o, "Nombre");
-                String ns        = extraerCampo(o, "Namespace");
-                String tipo      = extraerCampo(o, "Tipo");
-                String analisis  = extraerCampo(o, "Analisis");
+                String nombre   = extraerCampo(obj, "Nombre");
+                String ns       = extraerCampo(obj, "Namespace");
+                String tipo     = extraerCampo(obj, "Tipo");
+                String analisis = extraerCampo(obj, "Analisis");
+                String padre    = extraerCampo(obj, "Padre");
+                String tipoClase= extraerCampo(obj, "TipoClase");
+                int orden       = extraerEntero(obj, "Orden");
 
                 ClaseEntidad ce;
+
                 if("SQL".equalsIgnoreCase(tipo))
                     ce = new ClaseSQL(nombre, ns);
+                else if("SEALED".equalsIgnoreCase(tipo))
+                    ce = new SealedClass(nombre, ns);
                 else
                     ce = new ClasePOO(nombre, ns);
 
                 ce.setAnalisisADOO(analisis);
+                ce.setClasePadre(padre);
+                ce.setOrdenDecimal(orden);
 
-                // Atributos
-                List<String> attrs = extraerLista(o, "Atributos");
-                for(String a : attrs) ce.agregarAtributo(a);
+                // TipoClase (¬_¬)
+                if(!"null".equals(tipoClase))
+                    ce.setTipoClase(ClaseEnums.TipoClase.valueOf(tipoClase));
 
-                // Métodos
-                List<String> mets = extraerLista(o, "Metodos");
-                for(String m : mets) ce.agregarMetodo(m);
+                // Atributos COMPLETOS (¬_¬)
+                List<String> bloquesA = extraerObjetos(obj, "Atributos");
+                for(String ba : bloquesA)
+                {
+                    ClaseAtributo a = new ClaseAtributo(extraerCampo(ba, "Nombre"));
+                    a.encapsulacion = extraerCampo(ba, "Encapsulacion");
+                    a.tipoAtributo  = extraerCampo(ba, "TipoAtributo");
+                    a.tipoDato      = extraerCampo(ba, "TipoDato");
+                    a.esPK          = extraerBoolean(ba, "PK");
+                    a.esFK          = extraerBoolean(ba, "FK");
+                    a.esNullable    = extraerBoolean(ba, "Nullable");
+
+                    ce.getAtributos().add(a);
+                }
+
+                // Métodos (¬_¬)
+                for(String m : extraerLista(obj, "Metodos"))
+                    ce.agregarMetodo(m);
+
+                // Clases hijas (¬_¬)
+                for(String h : extraerLista(obj, "ClasesHijas"))
+                    ce.getClasesHijas().add(h);
 
                 res.entidades.add(ce);
             }
@@ -137,8 +193,56 @@ public class DataJSON
         }
         catch(Exception e)
         {
+            e.printStackTrace();
             return null;
         }
+    }
+
+    //=====================================
+    // UTILIDADES JSON ZORRODEV 2026
+    //=====================================
+    private static String toJson(String s)
+    {
+        if(s == null) s = "";
+        return "\"" + s.replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
+    }
+
+    private static int extraerEntero(String json, String campo)
+    {
+        try { return Integer.parseInt(extraerCampo(json, campo)); }
+        catch(Exception e) { return 0; }
+    }
+
+    private static boolean extraerBoolean(String json, String campo)
+    {
+        return json.contains("\"" + campo + "\": true");
+    }
+
+    private static String[] dividirObjetos(String array)
+    {
+        String contenido = array.substring(1, array.length()-1).trim();
+        if(contenido.isEmpty()) return new String[0];
+        return contenido.split("\\},\\s*\\{");
+    }
+
+    private static List<String> extraerObjetos(String json, String campo)
+    {
+        List<String> lista = new ArrayList<>();
+        String arr = extraerArray(json, campo);
+        if(arr == null) return lista;
+
+        String contenido = arr.substring(1, arr.length()-1).trim();
+        if(contenido.isEmpty()) return lista;
+
+        String[] objs = contenido.split("\\},\\s*\\{");
+        for(String o : objs)
+        {
+            String x = o.trim();
+            if(!x.startsWith("{")) x = "{" + x;
+            if(!x.endsWith("}"))   x = x + "}";
+            lista.add(x);
+        }
+        return lista;
     }
 
     private static String extraerCampo(String json, String campo)
@@ -169,9 +273,7 @@ public class DataJSON
             {
                 level--;
                 if(level == 0)
-                {
                     return json.substring(bracket, i+1);
-                }
             }
         }
         return null;
@@ -186,7 +288,6 @@ public class DataJSON
         String contenido = arr.substring(1, arr.length()-1).trim();
         if(contenido.isEmpty()) return lista;
 
-        // separar por comas simples
         String[] partes = contenido.split(",");
         for(String p : partes)
         {
