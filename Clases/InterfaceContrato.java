@@ -17,30 +17,43 @@ import java.util.List;
  */
 public interface InterfaceContrato 
 {
-    // ANALISIS / DESCRIPCION. => ANALISIS DISEÑO ORIENTADO A OBJETOS.  (≧◡≦) ZORRO DEVELOPER 2026!
-    String AnalisisADOO();              // Devuelve el análisis/descripción ADOO de la entidad. 
-    void   setAnalisisADOO(String txt); // Permite establecer el análisis/descripción ADOO.
-
-    // ATRIBUTOS
-    List<String> getAtributos();
-    void agregarAtributo(String atributo);
+    //===========================================
+    // ATRIBUTOS 
+    //===========================================
+    void agregarAtributo(String nombre);
     void editarAtributo(String viejo, String nuevo);
-    void borrarAtributo(String atributo);
+    void borrarAtributo(String nombre);
+    
+    List<ClaseAtributo> getAtributos();
 
-    // METODOS
-    List<String> getMetodos();
-    void agregarMetodo(String metodo);
+
+    //===========================================
+    // MÉTODOS
+    //===========================================
+    void agregarMetodo(String nombre);
     void editarMetodo(String viejo, String nuevo);
-    void borrarMetodo(String metodo);
+    void borrarMetodo(String nombre);
 
-    // MENU / VISTA DETALLADA
-    void ListarDatosEntidad(); // Muestra propiedades, atributos, métodos, etc. (flujo de menú interno). ZORRODEV 2026 (≧◡≦)
+    List<String> getMetodos();
+    
+    //===========================================
+    // ANALISIS ADOO DESCRIPCION. => ANALISIS DISEÑO ORIENTADO A OBJETOS.  (≧◡≦) ZORRO DEVEL
+    //===========================================
+    String AnalisisADOO();              // versión simple
+    String AnalisisADOO(String extra);  // versión extendida
+
+
+     // TONO PARA RELACIONES (HERENCIA) ZORRODEV 2026 (≧◡≦)
+    String ElijirTonoParaRelacion();
 
     // COLORES / POLIMORFISMO VISUALZORRODEV 2026 (≧◡≦)
     void Colorearse();             // Aplica color de la clase. ZORRODEV 2026 (≧◡≦)
     void ColorearseAtributos();    // Aplica color de atributos.  ZORRODEV 2026 (≧◡≦)
     void ColorearseMetodos();      // Aplica color de métodos. ZORRODEV 2026 (≧◡≦)
 
-    // TONO PARA RELACIONES (HERENCIA) ZORRODEV 2026 (≧◡≦)
-    String ElijirTonoParaRelacion();
+   
+
+    
+    // MENU / VISTA DETALLADA
+    void ListarDatosEntidad(); // Muestra propiedades, atributos, métodos, etc. (flujo de menú interno). ZORRODEV 2026 (≧◡≦)
 }
