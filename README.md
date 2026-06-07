@@ -104,6 +104,7 @@ Al ejecutar el programa verás un menú principal:
 
 Cada entidad tiene su propio menú interno para:
 
+``` 
 
 Agregar/editar/borrar atributos
 
@@ -149,6 +150,7 @@ Atributos
 Métodos
 
 Herencia
+``` 
 
 
 🛡️ Licencia ZORRODEV 2026
